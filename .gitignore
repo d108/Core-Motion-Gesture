@@ -1,0 +1,24 @@
+# Xcode
+!default.mode1v3
+!default.mode2v3
+!default.pbxuser
+!default.perspectivev3
+default.profraw
+*.hmap
+*.ipa
+*.mode1v3
+*.mode2v3
+*.moved-aside
+*.pbxuser
+*.perspectivev3
+*.xccheckout
+*.xcuserstate
+build/
+DerivedData
+xcuserdata
+IDEWorkspaceChecks.plist
+
+# macOS
+**/.DS_Store
+/Carthage
+/.idea
