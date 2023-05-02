@@ -19,4 +19,23 @@ enum MonitorAxis: CaseIterable
         case .z: return "Z"
         }
     }
+
+    func asAxisText() -> String
+    {
+        let axis = "-Axis"
+        switch self
+        {
+        case .x, .y, .z: return self.asText() + axis
+        }
+    }
+
+    func imageName() -> String
+    {
+        switch self
+        {
+        case .x: return "x.circle"
+        case .y: return "y.circle"
+        case .z: return "z.circle"
+        }
+    }
 }

@@ -17,9 +17,6 @@ protocol DoubleShakeDetectorProtocol
 
 // Detect a double shake gesture.
 //
-// Z-axis example:
-// The Z-axis is the up and down direction according to a phone's screen aligned parallel to the ground, like a tabletop.
-//
 // Only a limited number, keepValueCount, of readings are kept to prevent using more memory.
 // The motionCutoff is the strength of the detected motion according to the standard deviation of readings.
 struct DoubleShakeDetector: DoubleShakeDetectorProtocol
@@ -72,7 +69,7 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
                     print("\tread")
                 }
 
-                // We seed readingMinimum readings to ensure detection is active.
+                // We seed readingMinimum readings to ensure detection is active and stable.
                 if readingCount > readingMinimum
                 {
                     if fabs(standardDeviation(values: motionValues)) > motionCutoff
@@ -119,18 +116,21 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
     private func sendMotionEvent()
     {
         var event: MotionEvent = .none
+
         switch monitorAxis
         {
         case .x: event = .doubleXShake
         case .y: event = .doubleYShake
         case .z: event = .doubleZShake
         }
+
         motionEventStream?.sendMotionEvent(event: event)
     }
 
     private func accelerationValue(data: CMAccelerometerData) -> Double
     {
         var accelerationValue: Double?
+
         switch monitorAxis
         {
         case .x:
@@ -154,6 +154,7 @@ extension DoubleShakeDetector
     func mean(values: [Double]) -> Double
     {
         var total = 0.0
+
         for value in values
         {
             total += value

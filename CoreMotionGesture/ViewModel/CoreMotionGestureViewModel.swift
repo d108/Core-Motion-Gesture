@@ -9,7 +9,7 @@ protocol MotionDetectorHandlerProtocol
 final class CoreMotionGestureViewModel: ObservableObject, MotionDetectorHandlerProtocol
 {
     @Published var motionEvent: MotionEvent
-    @Published var doubleZShaked: Bool
+    @Published var doubleShaked: Bool
     @Published var monitoringButtonState: MonitoringButtonState
     let motionDetector: DoubleShakeDetectorProtocol
     let waveImageDelay: TimeInterval = 1.5
@@ -18,8 +18,8 @@ final class CoreMotionGestureViewModel: ObservableObject, MotionDetectorHandlerP
     init(motionDetector: DoubleShakeDetectorProtocol)
     {
         self.motionEvent = .none
-        self.doubleZShaked = false
-        self.monitoringButtonState = .started
+        self.doubleShaked = false
+        self.monitoringButtonState = .notStarted
         self.motionDetector = motionDetector
         self.handleStreamEvents()
     }
@@ -39,10 +39,10 @@ final class CoreMotionGestureViewModel: ObservableObject, MotionDetectorHandlerP
             .receive(on: DispatchQueue.main)
             .sink
         { motionEvent in
-            self.doubleZShaked = true
+            self.doubleShaked = true
             DispatchQueue.main.asyncAfter(deadline: .now() + self.waveImageDelay)
             {
-                self.doubleZShaked = false
+                self.doubleShaked = false
             }
         }
             .store(in: &cancellables)

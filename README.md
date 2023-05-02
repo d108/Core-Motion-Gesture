@@ -1,7 +1,7 @@
 # Core Motion Double Shake Gesture Detection Demo
 
 <p float="left">
-    <img src="image%2Fdouble-z-shake-demo.png" width="248" />
+    <img src="image%2Fdouble-shake-demo.png" width="248" />
     <img src="image%2Faccelerometer_axes.png" width="385" /> 
 </p>
 
@@ -29,6 +29,8 @@ Please find some notes about the detector listed below.
 - SwiftUI and Combine
 - MVVM
 - Minimum deployment = iOS 14.0
+
+Our app's architectural layers are cleanly separated, enabling smooth handling of all axes, even though we initially coded for only one axis.
 
 ## References
 

@@ -1,6 +1,6 @@
 enum MonitoringSystemImage: String
 {
-    case doubleZShaked = "waveform.path"
+    case doubleShaked = "waveform.path"
 }
 
 enum MonitoringButtonState
