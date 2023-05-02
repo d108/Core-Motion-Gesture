@@ -11,11 +11,11 @@ final class CoreMotionGestureViewModel: ObservableObject, MotionDetectorHandlerP
     @Published var motionEvent: MotionEvent
     @Published var doubleZShaked: Bool
     @Published var monitoringButtonState: MonitoringButtonState
-    let motionDetector: DoubleZShakeDetectorProtocol
+    let motionDetector: DoubleShakeDetectorProtocol
     let waveImageDelay: TimeInterval = 1.5
     var cancellables = [AnyCancellable]()
 
-    init(motionDetector: DoubleZShakeDetectorProtocol)
+    init(motionDetector: DoubleShakeDetectorProtocol)
     {
         self.motionEvent = .none
         self.doubleZShaked = false

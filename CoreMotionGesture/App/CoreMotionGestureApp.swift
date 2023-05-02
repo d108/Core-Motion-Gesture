@@ -5,14 +5,15 @@ import CoreMotion
 struct CoreMotionGestureApp: App
 {
     let motionManager: CMMotionManager
-    let motionDetector: DoubleZShakeDetectorProtocol
+    let motionDetector: DoubleShakeDetectorProtocol
     let hapticGenerator: HapticGeneratorProtocol
 
     init()
     {
         self.motionManager = CMMotionManager()
-        self.motionDetector = DoubleZShakeDetector(
-            motionManager: motionManager
+        self.motionDetector = DoubleShakeDetector(
+            motionManager: motionManager,
+            monitorAxis: .z
         )
         self.hapticGenerator = HapticGenerator(
             generator: UINotificationFeedbackGenerator()
@@ -26,9 +27,7 @@ struct CoreMotionGestureApp: App
             ContentView(
                 hapticGenerator: hapticGenerator,
                 motionEventViewModel: CoreMotionGestureViewModel(
-                    motionDetector: DoubleZShakeDetector(
-                        motionManager: CMMotionManager()
-                    )
+                    motionDetector: motionDetector
                 )
             )
         }

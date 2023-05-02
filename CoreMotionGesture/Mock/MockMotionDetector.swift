@@ -1,5 +1,6 @@
-struct MockMotionDetector: DoubleZShakeDetectorProtocol
+struct MockMotionDetector: DoubleShakeDetectorProtocol
 {
+    var monitorAxis: MonitorAxis
     var motionEventStream: MotionEventStreamProtocol?
 
     func startMonitoring()

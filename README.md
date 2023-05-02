@@ -1,12 +1,15 @@
-# Core Motion Double Z-Shake Gesture Detection Demo
+# Core Motion Double Shake Gesture Detection Demo
 
-![double-z-shake-demo.png](image%2Fdouble-z-shake-demo.png)
+<p float="left">
+    <img src="image%2Fdouble-z-shake-demo.png" width="248" />
+    <img src="image%2Faccelerometer_axes.png" width="385" /> 
+</p>
 
-We use the accelerometer to detect a custom gesture of a user shaking their device in a double Z-shaking motion.
-The Z-axis for an iPhone or iPad corresponds to a perpendicular line projected through the face of the screen when it is positioned parallel to the ground, like a tabletop.
+In SwiftUI, we use the accelerometer to detect a custom gesture of a user shaking their device in a double shaking motion.
+For example, the Z-axis for an iPhone or iPad corresponds to a perpendicular line projected through the face of the screen when it is positioned parallel to the ground, like a tabletop.
 We require a double motion to identify a user's signal in a noisy background of detections sensitive to small movements.
 
-- We show a waveform image when we detect a double Z-shake motion.
+- We show a waveform image when we detect a double shake motion.
 - The motion can be made with a crisp, double wrist flick, with the final move a little snappier, within a given time window.
 - We generate haptic feedback when a gesture is successfully detected.
 
@@ -26,6 +29,10 @@ Please find some notes about the detector listed below.
 - SwiftUI and Combine
 - MVVM
 - Minimum deployment = iOS 14.0
+
+## References
+
+Accelerometer axes diagram from https://developer.apple.com/documentation/coremotion/getting_raw_accelerometer_events
 
 ## License
 

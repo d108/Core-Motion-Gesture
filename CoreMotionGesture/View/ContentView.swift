@@ -7,6 +7,10 @@ struct ContentView: View
     let padding: CGFloat = 20
     let visible: CGFloat = 100
     let invisible: CGFloat = 0
+    let axisFontSize: CGFloat = 72
+    let circleWidth: CGFloat = 200
+    let circleLinewidth: CGFloat = 4
+    let circleColor: Color = .orange
     let label: (MonitoringButtonState) -> Label =
     { state in
         Label(state.buttonText(), systemImage: state.imageName())
@@ -27,17 +31,24 @@ struct ContentView: View
         print("detector \(motionEventViewModel.monitoringButtonState)")
         return VStack(spacing: vspace)
         {
-            Text("Testing Accelerometer\nfor Double Z-Shake Motion")
+            Text("Testing Accelerometer\nfor Double Shake Motion")
                 .multilineTextAlignment(.center)
                 .font(.title2)
             Text("The action can be used as a non-screen-based gesture in apps.")
                 .font(.caption)
                 .padding(padding)
             Spacer()
-            Image(systemName: MonitoringSystemImage.doubleZShaked.rawValue)
-                .resizable()
-                .scaledToFill()
-                .opacity(motionEventViewModel.doubleZShaked ? visible : invisible)
+            ZStack
+            {
+                Image(systemName: MonitoringSystemImage.doubleZShaked.rawValue)
+                    .resizable()
+                    .scaledToFill()
+                    .opacity(motionEventViewModel.doubleZShaked ? visible : invisible)
+                Text(motionEventViewModel.motionDetector.monitorAxis.asText())
+                    .font(.system(size: axisFontSize))
+                    .foregroundColor(circleColor)
+                    .overlay(Circle().stroke(circleColor, lineWidth: circleLinewidth).frame(width: circleWidth))
+            }
             Spacer()
             Button
             {
@@ -72,10 +83,9 @@ struct ContentView: View
         {
             await motionEventViewModel
                 .handleMonitoring(
-                    buttonState: motionEventViewModel.monitoringButtonState
-                )
+                buttonState: motionEventViewModel.monitoringButtonState
+            )
         }
-
     }
 }
 
@@ -85,7 +95,7 @@ struct ContentView_Previews: PreviewProvider
     {
         ContentView(
             motionEventViewModel: CoreMotionGestureViewModel(
-                motionDetector: MockMotionDetector()
+                motionDetector: MockMotionDetector(monitorAxis: .z)
             )
         )
     }
