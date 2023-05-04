@@ -7,7 +7,7 @@
 
 In SwiftUI, we use the accelerometer to detect a custom gesture of a user shaking their device in a double shaking motion.
 For example, the Z-axis for an iPhone or iPad corresponds to a perpendicular line projected through the face of the screen when it is positioned parallel to the ground, like a tabletop.
-We require a double motion to identify a user's signal in a noisy background of detections sensitive to small movements.
+We require a double motion to distinguish a user's signal in a noisy background of detections sensitive to small movements.
 
 - We show a waveform image when we detect a double shake motion.
 - The motion can be made with a crisp, double wrist flick, with the final move a little snappier, within a given time window.

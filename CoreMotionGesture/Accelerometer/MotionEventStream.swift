@@ -3,22 +3,30 @@ import Combine
 
 protocol MotionEventStreamProtocol
 {
-    var motionEventPublisher: AnyPublisher<MotionEvent, Never>? { get }
+    var motionEventPublisher: AnyPublisher<MotionEvent, MotionError>? { get }
     func sendMotionEvent(event: MotionEvent)
+    func sendMotionError(error: MotionError)
 }
 
 struct MotionEventStream: MotionEventStreamProtocol
 {
-    var motionEventPublisher: AnyPublisher<MotionEvent, Never>?
-    private var motionEventPassthroughSubject = PassthroughSubject<MotionEvent, Never>()
+    var motionEventPublisher: AnyPublisher<MotionEvent, MotionError>?
+    private var motionEventPassthroughSubject =
+        PassthroughSubject<MotionEvent, MotionError>()
 
     init()
     {
-        self.motionEventPublisher = self.motionEventPassthroughSubject.eraseToAnyPublisher()
+        self.motionEventPublisher = self.motionEventPassthroughSubject
+            .eraseToAnyPublisher()
     }
 
     func sendMotionEvent(event: MotionEvent)
     {
         motionEventPassthroughSubject.send(event)
+    }
+
+    func sendMotionError(error: MotionError)
+    {
+        motionEventPassthroughSubject.send(completion: .failure(error))
     }
 }

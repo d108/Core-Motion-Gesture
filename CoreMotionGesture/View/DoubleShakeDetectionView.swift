@@ -14,44 +14,76 @@ struct DoubleShakeDetectionView: View
     { state in
         Label(state.buttonText(), systemImage: state.imageName())
     }
+    let testErrorText = "Test Error"
+    var errorAlertFactory: ErrorAlertFactory
     let hapticGenerator: HapticGeneratorProtocol?
-    @ObservedObject var motionEventViewModel: CoreMotionGestureViewModel
+    @ObservedObject var motionEventViewModel: MotionEventViewModel
+
+    init(
+        hapticGenerator: HapticGeneratorProtocol?,
+        motionEventViewModel: MotionEventViewModel,
+        detectorsViewModel: DetectorsViewModel
+    ) {
+        self.hapticGenerator = hapticGenerator
+        self.motionEventViewModel = motionEventViewModel
+        self.errorAlertFactory = ErrorAlertFactory(
+            motionEventViewModel: motionEventViewModel,
+            detectorsViewModel: detectorsViewModel
+        )
+    }
 
     var body: some View
     {
         print("button state is \(motionEventViewModel.monitoringButtonState)",
             "for axis \(motionEventViewModel.motionDetector.monitorAxis)")
-        return VStack(spacing: vspace)
-        {
-            Text("Testing Accelerometer\nfor Double Shake Motion")
-                .multilineTextAlignment(.center)
-                .font(.title2)
-            Text("The action can be used as a non-screen-based gesture in apps.")
-                .font(.caption)
-                .padding(padding)
-            ZStack
+        return GeometryReader
+        { geo in
+            VStack(spacing: vspace)
             {
-                Image(systemName: MonitoringSystemImage.doubleShaked.rawValue)
-                    .resizable()
-                    .scaledToFill()
-                    .opacity(motionEventViewModel.doubleShaked ? visible : invisible)
-                Text(motionEventViewModel.motionDetector.monitorAxis.asText())
-                    .font(.system(size: axisFontSize))
-                    .foregroundColor(circleColor)
-                    .overlay(Circle().stroke(circleColor, lineWidth: circleLinewidth).frame(width: circleWidth))
-            }
-            Button
-            {
-                switch motionEventViewModel.monitoringButtonState
+                Text("Testing Accelerometer\nfor Double Shake Motion")
+                    .multilineTextAlignment(.center)
+                    .font(.title2)
+                Text("The motion can be used as a non-screen-based gesture in apps.")
+                    .font(.caption)
+                    .padding(padding)
+                Button
                 {
-                case .started: motionEventViewModel.monitoringButtonState = .notStarted
-                case .notStarted: motionEventViewModel.monitoringButtonState = .started
+                    motionEventViewModel.motionDetector
+                        .motionEventStream?.sendMotionError(error: .testError)
+                } label: {
+                    Text(testErrorText)
                 }
-            } label: {
-                switch motionEventViewModel.monitoringButtonState
+                ZStack
                 {
-                case .started: buttonLabel(motionEventViewModel.monitoringButtonState)
-                case .notStarted: buttonLabel(motionEventViewModel.monitoringButtonState)
+                    Image(systemName: MonitoringSystemImage.doubleShaked.rawValue)
+                        .resizable(resizingMode: .stretch)
+                        .opacity(motionEventViewModel.doubleShaked ? visible : invisible)
+                        .frame(maxHeight: geo.size.height * 0.5)
+                        .frame(maxWidth: .infinity)
+                    Text(motionEventViewModel.motionDetector.monitorAxis.asText())
+                        .font(.system(size: axisFontSize))
+                        .foregroundColor(circleColor)
+                        .overlay(Circle()
+                            .stroke(circleColor, lineWidth: circleLinewidth)
+                            .frame(width: circleWidth))
+                }
+                    .frame(maxHeight: geo.size.height * 0.5)
+                VStack
+                {
+                    Button
+                    {
+                        switch motionEventViewModel.monitoringButtonState
+                        {
+                        case .started: motionEventViewModel.monitoringButtonState = .notStarted
+                        case .notStarted: motionEventViewModel.monitoringButtonState = .started
+                        }
+                    } label: {
+                        switch motionEventViewModel.monitoringButtonState
+                        {
+                        case .started: buttonLabel(motionEventViewModel.monitoringButtonState)
+                        case .notStarted: buttonLabel(motionEventViewModel.monitoringButtonState)
+                        }
+                    }
                 }
             }
         }
@@ -77,6 +109,12 @@ struct DoubleShakeDetectionView: View
             .onDisappear()
         {
             motionEventViewModel.monitoringButtonState = .notStarted
+        }
+            .alert(isPresented: $motionEventViewModel.showErrorAlert)
+        {
+            return errorAlertFactory.errorAlert(
+                axis: motionEventViewModel.motionDetector.monitorAxis
+            )
         }
     }
 }

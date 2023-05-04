@@ -2,11 +2,6 @@ import SwiftUI
 import Combine
 import CoreMotion
 
-enum MotionError: Error
-{
-    case noDataAvailable
-}
-
 protocol DoubleShakeDetectorProtocol
 {
     var motionEventStream: MotionEventStreamProtocol? { get }
@@ -31,9 +26,13 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
     let accelerometerUpdateInterval: TimeInterval = 1 / 100 // 100 Hz
     let motionEventStream: MotionEventStreamProtocol?
     let monitorAxis: MonitorAxis
+    let fatalErrorText = "⚠️ Missing Stream: Should Not Happen"
 
-    init(motionManager: CMMotionManager, monitorAxis: MonitorAxis)
-    {
+    init(
+        motionManager: CMMotionManager,
+        monitorAxis: MonitorAxis,
+        motionEventStream: MotionEventStreamProtocol
+    ) {
         self.motionManager = motionManager
         motionManager.accelerometerUpdateInterval = accelerometerUpdateInterval
         self.motionEventStream = MotionEventStream()
@@ -56,7 +55,11 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
             motionManager.startAccelerometerUpdates(to: queue)
             { data, error in
                 guard error == nil else { fatalError(error!.localizedDescription) }
-                guard let data = data else { fatalError(MotionError.noDataAvailable.localizedDescription) }
+                guard let data = data else
+                {
+                    sendMotionError(error: .noDataAvailable)
+                    return
+                }
                 let value = accelerationValue(data: data)
 
                 // When not using the main queue, EXC_BAD_ACCESS happens here.
@@ -124,7 +127,24 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
         case .z: event = .doubleZShake
         }
 
-        motionEventStream?.sendMotionEvent(event: event)
+        if !axisMatchesEvent(motionEvent: event)
+        {
+            sendMotionError(error: .mismatchedAxis)
+        }
+        if let motionEventStream = motionEventStream
+        {
+            motionEventStream.sendMotionEvent(event: event)
+        }
+        else
+        {
+            fatalError(fatalErrorText)
+        }
+    }
+
+    private func sendMotionError(error: MotionError)
+    {
+        stopMonitoring()
+        motionEventStream?.sendMotionError(error: error)
     }
 
     private func accelerationValue(data: CMAccelerometerData) -> Double
@@ -144,8 +164,28 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
         {
             return accelerationValue
         }
-        
+
         return 0.0
+    }
+
+    private func axisMatchesEvent(motionEvent: MotionEvent) -> Bool
+    {
+        var matches = true
+
+        switch motionEvent
+        {
+        case .doubleXShake: matches = monitorAxis == .x
+        case .doubleYShake: matches = monitorAxis == .y
+        case .doubleZShake: matches = monitorAxis == .z
+        case .none: break
+        }
+
+        return matches
+    }
+
+    private func sendMotionError(motionError: MotionError)
+    {
+        motionEventStream?.sendMotionError(error: motionError)
     }
 }
 

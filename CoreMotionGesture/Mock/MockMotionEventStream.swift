@@ -3,9 +3,14 @@ import Combine
 
 struct MockMotionEventStream: MotionEventStreamProtocol
 {
-    var motionEventPublisher: AnyPublisher<MotionEvent, Never>?
+    var motionEventPublisher: AnyPublisher<MotionEvent, MotionError>?
 
     func sendMotionEvent(event: MotionEvent)
+    {
+        // dummy implementation
+    }
+
+    func sendMotionError(error: MotionError)
     {
         // dummy implementation
     }
