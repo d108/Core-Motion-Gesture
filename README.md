@@ -1,8 +1,8 @@
 # Core Motion Double Shake Gesture Detection Demo
 
 <p float="left">
-    <img src="image%2Fdouble-shake-demo.png" width="248" />
-    <img src="image%2Faccelerometer_axes.png" width="385" /> 
+    <img src="image/double-shake-demo.png" width="248" />
+    <img src="image/accelerometer_axes.png" width="385" /> 
 </p>
 
 In SwiftUI, we use the accelerometer to detect a custom gesture of a user shaking their device in a double shaking motion.
@@ -31,6 +31,23 @@ Please find some notes about the detector listed below.
 - Minimum deployment = iOS 14.0
 
 Our app's architectural layers are cleanly separated, enabling smooth handling of all axes, even though we initially coded for only one axis.
+
+## Error handling
+
+To create our detector as a series of events, we utilized a Publisher. If we modify the declaration of our `motionEventPublisher` away from the `Never` in `AnyPublisher<MotionEvent, Never>,` errors can be sent into it. 
+
+It is crucial to consider the creation site of `DoubleShakeDetectionView` in `ContentView.swift` to build replacement views properly. Otherwise, the issue may become overwhelming. 
+
+Though immutable structs have advantages, imperatively managing complex, nested internal states within them is not recommended. Regenerating a Publisher completed by a failure and all its related dependencies can become messy, as an example.
+
+The views in question have the following form:
+
+    DoubleShakeDetectionView(
+        hapticGenerator: hapticGenerator,
+        motionEventViewModel: coreMotionGestureViewModel(
+            motionDetector(monitorAxis)
+        )
+    )
 
 ## References
 
