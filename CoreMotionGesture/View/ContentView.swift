@@ -4,7 +4,8 @@ import CoreMotion
 struct ContentView: View
 {
     @State private var selectedTab: MonitorAxis = .x
-    @ObservedObject var detectorsViewModel: DetectorsViewModel
+    @StateObject var detectorsViewModel: DetectorsViewModel =
+        DetectorsViewModel()
     let tabLabel: (MonitorAxis) -> Label =
     { axis in
         Label(axis.asAxisText(), systemImage: axis.imageName())
@@ -29,7 +30,6 @@ struct ContentView: View
         hapticGenerator: HapticGeneratorProtocol? = nil
     ) {
         self.hapticGenerator = hapticGenerator
-        self.detectorsViewModel = DetectorsViewModel()
     }
 
     // View factory
@@ -42,9 +42,8 @@ struct ContentView: View
             hapticGenerator: hapticGenerator,
             motionEventViewModel: coreMotionGestureViewModel(
                 motionDetector(monitorAxis, motionEventStream)
-            ),
-            detectorsViewModel: detectorsViewModel
-        )
+            )
+        ).environmentObject(detectorsViewModel)
     }
 
     var body: some View
@@ -73,6 +72,7 @@ struct ContentView: View
                 .tag(MonitorAxis.z)
                 .id(detectorsViewModel.detectionViewIDs[.z])
         }
+            .environmentObject(detectorsViewModel)
     }
 }
 

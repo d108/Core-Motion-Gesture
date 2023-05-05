@@ -15,21 +15,21 @@ struct DoubleShakeDetectionView: View
         Label(state.buttonText(), systemImage: state.imageName())
     }
     let testErrorText = "Test Error"
-    var errorAlertFactory: ErrorAlertFactory
     let hapticGenerator: HapticGeneratorProtocol?
     @ObservedObject var motionEventViewModel: MotionEventViewModel
+    @EnvironmentObject var detectorsViewModel: DetectorsViewModel
+    let errorAlertFactory: (MotionEventViewModel, DetectorsViewModel)
+        -> ErrorAlertFactory =
+    {
+        ErrorAlertFactory(motionEventViewModel: $0, detectorsViewModel: $1)
+    }
 
     init(
         hapticGenerator: HapticGeneratorProtocol?,
-        motionEventViewModel: MotionEventViewModel,
-        detectorsViewModel: DetectorsViewModel
+        motionEventViewModel: MotionEventViewModel
     ) {
         self.hapticGenerator = hapticGenerator
         self.motionEventViewModel = motionEventViewModel
-        self.errorAlertFactory = ErrorAlertFactory(
-            motionEventViewModel: motionEventViewModel,
-            detectorsViewModel: detectorsViewModel
-        )
     }
 
     var body: some View
@@ -101,8 +101,7 @@ struct DoubleShakeDetectionView: View
         }
             .task
         {
-            await motionEventViewModel
-                .handleMonitoring(
+            await motionEventViewModel.handleMonitoring(
                 buttonState: motionEventViewModel.monitoringButtonState
             )
         }
@@ -112,7 +111,8 @@ struct DoubleShakeDetectionView: View
         }
             .alert(isPresented: $motionEventViewModel.showErrorAlert)
         {
-            return errorAlertFactory.errorAlert(
+            let factory = errorAlertFactory(motionEventViewModel, detectorsViewModel)
+            return factory.errorAlert(
                 axis: motionEventViewModel.motionDetector.monitorAxis
             )
         }
