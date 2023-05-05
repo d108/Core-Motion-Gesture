@@ -50,29 +50,17 @@ struct ContentView: View
     {
         return TabView(selection: $selectedTab)
         {
-            doubleShakeDetectionView(
-                monitorAxis: .x,
-                motionEventStream: MotionEventStream()
-            )
-                .tabItem { tabLabel(.x) }
-                .tag(MonitorAxis.x)
-                .id(detectorsViewModel.detectionViewIDs[.x])
-            doubleShakeDetectionView(
-                monitorAxis: .y,
-                motionEventStream: MotionEventStream()
-            )
-                .tabItem { tabLabel(.y) }
-                .tag(MonitorAxis.y)
-                .id(detectorsViewModel.detectionViewIDs[.y])
-            doubleShakeDetectionView(
-                monitorAxis: .z,
-                motionEventStream: MotionEventStream()
-            )
-                .tabItem { tabLabel(.z) }
-                .tag(MonitorAxis.z)
-                .id(detectorsViewModel.detectionViewIDs[.z])
+            ForEach(MonitorAxis.allCases)
+            { axis in
+                doubleShakeDetectionView(
+                    monitorAxis: axis,
+                    motionEventStream: MotionEventStream()
+                )
+                    .tabItem { tabLabel(axis) }
+                    .tag(axis)
+                    .id(detectorsViewModel.detectionViewIDs[axis])
+            }
         }
-            .environmentObject(detectorsViewModel)
     }
 }
 

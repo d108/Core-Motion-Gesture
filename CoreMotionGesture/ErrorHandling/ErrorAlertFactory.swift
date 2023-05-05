@@ -22,7 +22,6 @@ protocol DetectorViewIDsProtocol
 struct ErrorAlertFactory
 {
     var errorTitle = "An Error Occurred"
-    var errorMessage = "Message"
     var unknownError = "Detection has stopped"
     var okay = "Okay"
     var motionEventViewModel: MotionEventViewModelErrorAlertProtocol

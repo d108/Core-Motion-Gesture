@@ -6,17 +6,27 @@ enum MotionEvent
     case none
 }
 
-enum MonitorAxis: CaseIterable
+enum MonitorAxis: CaseIterable, Identifiable
 {
-    case x, y, z
-
-    func asText() -> String
+    var id: String
     {
         switch self
         {
         case .x: return "X"
         case .y: return "Y"
         case .z: return "Z"
+        }
+    }
+
+    case x, y, z
+
+    func asText() -> String
+    {
+        switch self
+        {
+        case .x: return self.id
+        case .y: return self.id
+        case .z: return self.id
         }
     }
 
