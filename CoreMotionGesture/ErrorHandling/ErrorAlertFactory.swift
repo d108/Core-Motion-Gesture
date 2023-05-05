@@ -7,6 +7,7 @@ struct ErrorAlert: Identifiable
     var message: String
 }
 
+// We can eventually process multiple errors.
 protocol MotionEventViewModelErrorAlertProtocol
 {
     var showErrorAlert: Bool { get set }

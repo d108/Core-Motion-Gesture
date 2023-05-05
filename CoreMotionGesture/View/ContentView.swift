@@ -3,7 +3,7 @@ import CoreMotion
 
 struct ContentView: View
 {
-    @State private var selectedTab: MonitorAxis = .x
+    @State private var selectedTab: MonitorAxis = Setting.defaultTab
     @StateObject var detectorsViewModel: DetectorsViewModel =
         DetectorsViewModel()
     let tabLabel: (MonitorAxis) -> Label =

@@ -10,10 +10,12 @@ enum MonitoringButtonState
 
     func buttonText() -> String
     {
+        let monitoring = "Monitoring"
+
         switch self
         {
-        case .started: return "Stop Monitoring"
-        case .notStarted: return "Start Monitoring"
+        case .started: return "Stop " +  monitoring
+        case .notStarted: return "Start " + monitoring
         }
     }
 

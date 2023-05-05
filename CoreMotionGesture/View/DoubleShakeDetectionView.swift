@@ -10,6 +10,7 @@ struct DoubleShakeDetectionView: View
     let circleWidth: CGFloat = 200
     let circleLinewidth: CGFloat = 4
     let circleColor: Color = .orange
+    let higButtonHeight: CGFloat = 44
     let buttonLabel: (MonitoringButtonState) -> Label =
     { state in
         Label(state.buttonText(), systemImage: state.imageName())
@@ -36,58 +37,57 @@ struct DoubleShakeDetectionView: View
     {
         print("button state is \(motionEventViewModel.monitoringButtonState)",
             "for axis \(motionEventViewModel.motionDetector.monitorAxis)")
-        return GeometryReader
-        { geo in
-            VStack(spacing: vspace)
+        return VStack(spacing: vspace)
+        {
+            Text("Testing Accelerometer\nfor Double Shake Motion")
+                .multilineTextAlignment(.center)
+                .font(.title2)
+            Text("The motion can be used as a non-screen-based gesture in apps.")
+                .font(.caption)
+                .padding(padding)
+            Button
             {
-                Text("Testing Accelerometer\nfor Double Shake Motion")
-                    .multilineTextAlignment(.center)
-                    .font(.title2)
-                Text("The motion can be used as a non-screen-based gesture in apps.")
-                    .font(.caption)
-                    .padding(padding)
+                motionEventViewModel.motionDetector
+                    .motionEventStream?.sendMotionError(error: .testError)
+            } label: {
+                Text(testErrorText)
+            }
+            Spacer()
+            ZStack
+            {
+                Image(systemName: MonitoringSystemImage.doubleShaked.rawValue)
+                    .resizable(resizingMode: .stretch)
+                    .opacity(motionEventViewModel.doubleShaked ? visible : invisible)
+                    .frame(maxWidth: .infinity)
+                Text(motionEventViewModel.motionDetector.monitorAxis.asText())
+                    .font(.system(size: axisFontSize))
+                    .foregroundColor(circleColor)
+                    .overlay(Circle()
+                        .stroke(circleColor, lineWidth: circleLinewidth)
+                        .frame(width: circleWidth))
+            }.if(Setting.debugLayout) { $0.border(.purple) }
+            VStack
+            {
+                Spacer().frame(maxHeight: higButtonHeight)
                 Button
                 {
-                    motionEventViewModel.motionDetector
-                        .motionEventStream?.sendMotionError(error: .testError)
-                } label: {
-                    Text(testErrorText)
-                }
-                ZStack
-                {
-                    Image(systemName: MonitoringSystemImage.doubleShaked.rawValue)
-                        .resizable(resizingMode: .stretch)
-                        .opacity(motionEventViewModel.doubleShaked ? visible : invisible)
-                        .frame(maxHeight: geo.size.height * 0.5)
-                        .frame(maxWidth: .infinity)
-                    Text(motionEventViewModel.motionDetector.monitorAxis.asText())
-                        .font(.system(size: axisFontSize))
-                        .foregroundColor(circleColor)
-                        .overlay(Circle()
-                            .stroke(circleColor, lineWidth: circleLinewidth)
-                            .frame(width: circleWidth))
-                }
-                    .frame(maxHeight: geo.size.height * 0.5)
-                VStack
-                {
-                    Button
+                    switch motionEventViewModel.monitoringButtonState
                     {
-                        switch motionEventViewModel.monitoringButtonState
-                        {
-                        case .started: motionEventViewModel.monitoringButtonState = .notStarted
-                        case .notStarted: motionEventViewModel.monitoringButtonState = .started
-                        }
-                    } label: {
-                        switch motionEventViewModel.monitoringButtonState
-                        {
-                        case .started: buttonLabel(motionEventViewModel.monitoringButtonState)
-                        case .notStarted: buttonLabel(motionEventViewModel.monitoringButtonState)
-                        }
+                    case .started: motionEventViewModel.monitoringButtonState = .notStarted
+                    case .notStarted: motionEventViewModel.monitoringButtonState = .started
                     }
+                } label: {
+                    switch motionEventViewModel.monitoringButtonState
+                    {
+                    case .started: buttonLabel(motionEventViewModel.monitoringButtonState)
+                    case .notStarted: buttonLabel(motionEventViewModel.monitoringButtonState)
+                    }
+
                 }
-            }
-        }
-            .padding()
+                Spacer().frame(maxHeight: higButtonHeight)
+            }.if(Setting.debugLayout) { $0.border(.pink) }
+        }.if(Setting.debugLayout) { $0.border(.green) }
+            .padding(.vertical)
             .onChange(of: motionEventViewModel.monitoringButtonState)
         { buttonState in
             motionEventViewModel.handleMonitoring(buttonState: buttonState)

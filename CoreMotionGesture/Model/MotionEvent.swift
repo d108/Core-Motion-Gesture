@@ -22,30 +22,18 @@ enum MonitorAxis: CaseIterable, Identifiable
 
     func asText() -> String
     {
-        switch self
-        {
-        case .x: return self.id
-        case .y: return self.id
-        case .z: return self.id
-        }
+        self.id
     }
 
     func asAxisText() -> String
     {
         let axis = "-Axis"
-        switch self
-        {
-        case .x, .y, .z: return self.asText() + axis
-        }
+
+        return self.asText() + axis
     }
 
     func imageName() -> String
     {
-        switch self
-        {
-        case .x: return "x.circle"
-        case .y: return "y.circle"
-        case .z: return "z.circle"
-        }
+        self.id.lowercased() + ".circle"
     }
 }
