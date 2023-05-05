@@ -7,19 +7,6 @@ struct ErrorAlert: Identifiable
     var message: String
 }
 
-// We can eventually process multiple errors.
-protocol MotionEventViewModelErrorAlertProtocol
-{
-    var showErrorAlert: Bool { get set }
-    var motionErrors: [LocalizedError]? { get }
-}
-
-// For managing detector view IDs.
-protocol DetectorViewIDsProtocol
-{
-    func resetDetectorViewID(axis: MonitorAxis)
-}
-
 struct ErrorAlertFactory
 {
     var errorTitle = "An Error Occurred"

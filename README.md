@@ -5,7 +5,7 @@
     <img src="image/accelerometer_axes.png" width="385" /> 
 </p>
 
-In SwiftUI, we use the accelerometer to detect a custom gesture of a user shaking their device in a double shaking motion.
+In SwiftUI for iOS, we use the accelerometer to detect a custom gesture of a user shaking their device in a double shaking motion.
 For example, the Z-axis for an iPhone or iPad corresponds to a perpendicular line projected through the face of the screen when it is positioned parallel to the ground, like a tabletop.
 We require a double motion to distinguish a user's signal in a noisy background of detections sensitive to small movements.
 
@@ -32,11 +32,11 @@ Please find some notes about the detector listed below.
 
 Our app's architectural layers are cleanly separated, enabling smooth handling of all axes, even though we initially coded for only one axis.
 
-## Error handling
+### Errors will likely never not happen
 
-To create our detector as a series of events, we utilized a Publisher. If we modify the declaration of our `motionEventPublisher` away from the `Never` in `AnyPublisher<MotionEvent, Never>,` errors can be sent into it. 
+To create our detector as a series of events, we utilized a Publisher. If we modify the declaration of our `motionEventPublisher` away from the `Never` in `AnyPublisher<MotionEvent, Never>,` errors can be sent into it.
 
-It is crucial to consider the creation site of `DoubleShakeDetectionView` in `ContentView.swift` to build replacement views properly. Otherwise, the issue may become overwhelming. 
+It is crucial to consider the creation site of `DoubleShakeDetectionView` in `ContentView.swift` to build replacement views properly. Otherwise, the issue may become overwhelming.
 
 Though immutable structs have advantages, imperatively managing complex, nested internal states within them is not recommended. Regenerating a Publisher completed by a failure and all its related dependencies can become messy, as an example.
 
@@ -48,6 +48,21 @@ The views in question have the following form:
             motionDetector(monitorAxis)
         )
     )
+
+### Choosing a site for error handling
+
+To solve our need to handle errors, we have created a `MotionError` that conforms to `LocalizedError` and changed our Publisher to `AnyPublisher<MotionEvent, MotionError>.` Our Publisher contract stipulates that any error will cause completion of the stream by a failure. Consequently, we can align our design to the event stream and consider all operations as completed during an error condition.
+
+In case an error occurs, we can regenerate the entire setup by regenerating the detector view and its dependencies. We won't attempt to recover from errors at a lower level than our Publisher since it is standard operating procedure for immutable value types to return a freshly constructed value.
+
+To handle errors at the site of the detector view's creation, we organize our code by grouping our dependency graph's creation at a single site. We assign a new UUID for a detector view to trigger the regeneration of the entire setup, which we manage in a separate view model. The resulting view factory appears as the following code.
+
+    DoubleShakeDetectionView(
+        hapticGenerator: hapticGenerator,
+        motionEventViewModel: coreMotionGestureViewModel(
+            motionDetector(monitorAxis, motionEventStream)
+        )
+    ).environmentObject(detectorsViewModel)
 
 ## References
 

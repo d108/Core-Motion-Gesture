@@ -1,6 +1,13 @@
 import Foundation
 import Combine
 
+// We can eventually process multiple errors.
+protocol MotionEventViewModelErrorAlertProtocol
+{
+    var showErrorAlert: Bool { get set }
+    var motionErrors: [LocalizedError]? { get }
+}
+
 protocol MotionDetectorHandlerProtocol
 {
     func handleMonitoring(buttonState: MonitoringButtonState)

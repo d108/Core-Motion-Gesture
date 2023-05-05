@@ -5,6 +5,7 @@ enum MotionError: LocalizedError
     case mismatchedAxis
     case noDataAvailable
     case testError
+    case accelerometerFailed(String?)
 
     var failureReason: String?
     {
@@ -16,6 +17,14 @@ enum MotionError: LocalizedError
             return "Expected accelerometer data is not available."
         case .testError:
             return "User forced completion by failure."
+        case .accelerometerFailed(let description):
+            let fatalError = "Accelerometer failed"
+            if let description = description
+            {
+                return fatalError + ": " + description
+            } else {
+                return fatalError
+            }
         }
     }
 }

@@ -1,5 +1,11 @@
 import SwiftUI
 
+// For managing detector view IDs.
+protocol DetectorViewIDsProtocol
+{
+    func resetDetectorViewID(axis: MonitorAxis)
+}
+
 // Track IDs for detector views.
 final class DetectorsViewModel: ObservableObject, DetectorViewIDsProtocol
 {
