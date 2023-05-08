@@ -6,7 +6,7 @@ enum MotionEvent
     case none
 }
 
-enum MonitorAxis: CaseIterable, Identifiable
+enum MonitorAxis: CaseIterable, Codable, Identifiable
 {
     var id: String
     {

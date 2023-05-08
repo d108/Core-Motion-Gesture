@@ -3,7 +3,7 @@ import CoreMotion
 
 struct ContentView: View
 {
-    @State private var selectedTab: MonitorAxis = Setting.defaultTab
+    @State private var selectedTab: MonitorAxis
     @StateObject var detectorsViewModel: DetectorsViewModel =
         DetectorsViewModel()
     let tabLabel: (MonitorAxis) -> Label =
@@ -25,11 +25,20 @@ struct ContentView: View
         MotionEventViewModel(motionDetector: detector)
     }
     let hapticGenerator: HapticGeneratorProtocol?
+    let userTabStorage: UserTabStorageProtocol
 
     init(
-        hapticGenerator: HapticGeneratorProtocol? = nil
+        hapticGenerator: HapticGeneratorProtocol? = nil,
+        userTabStorage: UserTabStorageProtocol
     ) {
         self.hapticGenerator = hapticGenerator
+        self.userTabStorage = userTabStorage
+        do
+        {
+            _selectedTab = State(initialValue: try userTabStorage.loadTab())
+        } catch {
+            _selectedTab = State(initialValue: Setting.defaultTab)
+        }
     }
 
     // View factory
@@ -61,6 +70,10 @@ struct ContentView: View
                     .id(detectorsViewModel.detectionViewIDs[axis])
             }
         }
+            .onChange(of: selectedTab)
+        { selectedTab in
+            userTabStorage.storeTab(selectedTab: selectedTab)
+        }
     }
 }
 
@@ -68,6 +81,8 @@ struct ContentView_Previews: PreviewProvider
 {
     static var previews: some View
     {
-        ContentView()
+        ContentView(
+            userTabStorage: MockUserTabStorage(defaults: MockUserDefaults())
+        )
     }
 }

@@ -14,6 +14,13 @@
 		653CBBD32A05BAE900F590C1 /* View+Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CBBD22A05BAE900F590C1 /* View+Condition.swift */; };
 		653CBBD62A05BB8100F590C1 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CBBD52A05BB8100F590C1 /* Setting.swift */; };
 		6545589829F232D200B5B0F1 /* MonitorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6545589729F232D200B5B0F1 /* MonitorState.swift */; };
+		655AFA5D2A0884DB005B9BC9 /* MotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA5C2A0884DB005B9BC9 /* MotionData.swift */; };
+		655AFA612A09866B005B9BC9 /* UserDefaults+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA602A09866B005B9BC9 /* UserDefaults+Codable.swift */; };
+		655AFA632A098780005B9BC9 /* User+Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA622A098780005B9BC9 /* User+Tab.swift */; };
+		655AFA652A0989BC005B9BC9 /* UserTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA642A0989BC005B9BC9 /* UserTab.swift */; };
+		655AFA672A098B31005B9BC9 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA662A098B31005B9BC9 /* UserError.swift */; };
+		655AFA692A098D36005B9BC9 /* MockUserTabStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA682A098D36005B9BC9 /* MockUserTabStorage.swift */; };
+		655AFA6B2A098DE8005B9BC9 /* MockUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA6A2A098DE8005B9BC9 /* MockUserDefaults.swift */; };
 		656962EA2A04441300E9CC4D /* DetectorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656962E92A04441300E9CC4D /* DetectorsViewModel.swift */; };
 		6569B0E22A01667500BF820F /* DoubleShakeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6569B0E12A01667500BF820F /* DoubleShakeDetector.swift */; };
 		6569B0E52A01CE6300BF820F /* DoubleShakeDetectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6569B0E42A01CE6300BF820F /* DoubleShakeDetectionView.swift */; };
@@ -49,6 +56,13 @@
 		653CBBD22A05BAE900F590C1 /* View+Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Condition.swift"; sourceTree = "<group>"; };
 		653CBBD52A05BB8100F590C1 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		6545589729F232D200B5B0F1 /* MonitorState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorState.swift; sourceTree = "<group>"; };
+		655AFA5C2A0884DB005B9BC9 /* MotionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionData.swift; sourceTree = "<group>"; };
+		655AFA602A09866B005B9BC9 /* UserDefaults+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Codable.swift"; sourceTree = "<group>"; };
+		655AFA622A098780005B9BC9 /* User+Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+Tab.swift"; sourceTree = "<group>"; };
+		655AFA642A0989BC005B9BC9 /* UserTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTab.swift; sourceTree = "<group>"; };
+		655AFA662A098B31005B9BC9 /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
+		655AFA682A098D36005B9BC9 /* MockUserTabStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserTabStorage.swift; sourceTree = "<group>"; };
+		655AFA6A2A098DE8005B9BC9 /* MockUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDefaults.swift; sourceTree = "<group>"; };
 		656962E92A04441300E9CC4D /* DetectorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorsViewModel.swift; sourceTree = "<group>"; };
 		6569B0E12A01667500BF820F /* DoubleShakeDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleShakeDetector.swift; sourceTree = "<group>"; };
 		6569B0E42A01CE6300BF820F /* DoubleShakeDetectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleShakeDetectionView.swift; sourceTree = "<group>"; };
@@ -114,10 +128,21 @@
 			isa = PBXGroup;
 			children = (
 				6545589729F232D200B5B0F1 /* MonitorState.swift */,
+				655AFA5C2A0884DB005B9BC9 /* MotionData.swift */,
 				65E9BF552A042D1F004F5E5A /* MotionError.swift */,
 				651E6F2329FEDDDE00C43B7C /* MotionEvent.swift */,
+				655AFA662A098B31005B9BC9 /* UserError.swift */,
+				655AFA642A0989BC005B9BC9 /* UserTab.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		655AFA5F2A09856C005B9BC9 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				655AFA622A098780005B9BC9 /* User+Tab.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		65DB943429F1E3A700F22EB8 /* ViewModel */ = {
@@ -151,6 +176,7 @@
 		65EA24FC29F19D7400760C4C /* CoreMotionGesture */ = {
 			isa = PBXGroup;
 			children = (
+				655AFA5F2A09856C005B9BC9 /* Persistence */,
 				653CBBD42A05BB6000F590C1 /* Setting */,
 				6545589629F232C000B5B0F1 /* Model */,
 				65DB943429F1E3A700F22EB8 /* ViewModel */,
@@ -212,6 +238,7 @@
 		65EA252C29F1A47A00760C4C /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				655AFA602A09866B005B9BC9 /* UserDefaults+Codable.swift */,
 				653CBBD22A05BAE900F590C1 /* View+Condition.swift */,
 				65EA252D29F1A48900760C4C /* View+Task.swift */,
 			);
@@ -224,6 +251,8 @@
 				651E6F2829FF053B00C43B7C /* MockHapticGenerator.swift */,
 				65EA253029F1A59800760C4C /* MockMotionDetector.swift */,
 				65DB943229F1E04500F22EB8 /* MockMotionEventStream.swift */,
+				655AFA6A2A098DE8005B9BC9 /* MockUserDefaults.swift */,
+				655AFA682A098D36005B9BC9 /* MockUserTabStorage.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -329,21 +358,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				655AFA692A098D36005B9BC9 /* MockUserTabStorage.swift in Sources */,
 				6509A2862A04924A00D7FA36 /* ErrorAlertFactory.swift in Sources */,
+				655AFA632A098780005B9BC9 /* User+Tab.swift in Sources */,
 				65EA252E29F1A48900760C4C /* View+Task.swift in Sources */,
 				65EA253129F1A59800760C4C /* MockMotionDetector.swift in Sources */,
 				65DB943629F1E3B800F22EB8 /* MotionEventViewModel.swift in Sources */,
 				6569B0E52A01CE6300BF820F /* DoubleShakeDetectionView.swift in Sources */,
+				655AFA672A098B31005B9BC9 /* UserError.swift in Sources */,
 				651E6F2729FF03CA00C43B7C /* HapticGenerator.swift in Sources */,
 				6545589829F232D200B5B0F1 /* MonitorState.swift in Sources */,
 				65EA250029F19D7400760C4C /* ContentView.swift in Sources */,
 				651E6F2429FEDDDE00C43B7C /* MotionEvent.swift in Sources */,
+				655AFA612A09866B005B9BC9 /* UserDefaults+Codable.swift in Sources */,
+				655AFA5D2A0884DB005B9BC9 /* MotionData.swift in Sources */,
 				6569B0E22A01667500BF820F /* DoubleShakeDetector.swift in Sources */,
 				653CBBD62A05BB8100F590C1 /* Setting.swift in Sources */,
 				65EA24FE29F19D7400760C4C /* CoreMotionGestureApp.swift in Sources */,
 				65E9BF562A042D1F004F5E5A /* MotionError.swift in Sources */,
+				655AFA652A0989BC005B9BC9 /* UserTab.swift in Sources */,
 				656962EA2A04441300E9CC4D /* DetectorsViewModel.swift in Sources */,
 				65DB943129F1DE8E00F22EB8 /* MotionEventStream.swift in Sources */,
+				655AFA6B2A098DE8005B9BC9 /* MockUserDefaults.swift in Sources */,
 				651E6F2929FF053B00C43B7C /* MockHapticGenerator.swift in Sources */,
 				65DB943329F1E04500F22EB8 /* MockMotionEventStream.swift in Sources */,
 				653CBBD32A05BAE900F590C1 /* View+Condition.swift in Sources */,

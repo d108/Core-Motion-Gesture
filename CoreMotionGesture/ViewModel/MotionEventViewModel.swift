@@ -81,6 +81,12 @@ final class MotionEventViewModel:
                 {
                     self.doubleShaked = false
                 }
+                // Our data stream is designed to receive events continuously, but it completes on
+                // an error, according to the Publisher contract. The timing of responses to state
+                // changes is also crucial. We have a published property called `doubleShaked`,
+                // which is a Bool that toggles with a predefined delay. As a result, multiple
+                // events that occur within this window will not trigger extra user interface
+                // responses.
             })
             .store(in: &cancellables)
     }
