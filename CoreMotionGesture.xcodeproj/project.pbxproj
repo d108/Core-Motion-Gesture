@@ -21,6 +21,8 @@
 		655AFA672A098B31005B9BC9 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA662A098B31005B9BC9 /* UserError.swift */; };
 		655AFA692A098D36005B9BC9 /* MockUserTabStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA682A098D36005B9BC9 /* MockUserTabStorage.swift */; };
 		655AFA6B2A098DE8005B9BC9 /* MockUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA6A2A098DE8005B9BC9 /* MockUserDefaults.swift */; };
+		655AFA6D2A09B3F6005B9BC9 /* DoubleShakeDetector+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA6C2A09B3F6005B9BC9 /* DoubleShakeDetector+Math.swift */; };
+		655AFA6F2A09B438005B9BC9 /* DoubleShakeDetector+EventHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655AFA6E2A09B438005B9BC9 /* DoubleShakeDetector+EventHandling.swift */; };
 		656962EA2A04441300E9CC4D /* DetectorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656962E92A04441300E9CC4D /* DetectorsViewModel.swift */; };
 		6569B0E22A01667500BF820F /* DoubleShakeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6569B0E12A01667500BF820F /* DoubleShakeDetector.swift */; };
 		6569B0E52A01CE6300BF820F /* DoubleShakeDetectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6569B0E42A01CE6300BF820F /* DoubleShakeDetectionView.swift */; };
@@ -63,6 +65,8 @@
 		655AFA662A098B31005B9BC9 /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		655AFA682A098D36005B9BC9 /* MockUserTabStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserTabStorage.swift; sourceTree = "<group>"; };
 		655AFA6A2A098DE8005B9BC9 /* MockUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDefaults.swift; sourceTree = "<group>"; };
+		655AFA6C2A09B3F6005B9BC9 /* DoubleShakeDetector+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DoubleShakeDetector+Math.swift"; sourceTree = "<group>"; };
+		655AFA6E2A09B438005B9BC9 /* DoubleShakeDetector+EventHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DoubleShakeDetector+EventHandling.swift"; sourceTree = "<group>"; };
 		656962E92A04441300E9CC4D /* DetectorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorsViewModel.swift; sourceTree = "<group>"; };
 		6569B0E12A01667500BF820F /* DoubleShakeDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleShakeDetector.swift; sourceTree = "<group>"; };
 		6569B0E42A01CE6300BF820F /* DoubleShakeDetectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleShakeDetectionView.swift; sourceTree = "<group>"; };
@@ -213,6 +217,8 @@
 			isa = PBXGroup;
 			children = (
 				6569B0E12A01667500BF820F /* DoubleShakeDetector.swift */,
+				655AFA6E2A09B438005B9BC9 /* DoubleShakeDetector+EventHandling.swift */,
+				655AFA6C2A09B3F6005B9BC9 /* DoubleShakeDetector+Math.swift */,
 				65DB943029F1DE8E00F22EB8 /* MotionEventStream.swift */,
 			);
 			path = Accelerometer;
@@ -359,10 +365,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				655AFA692A098D36005B9BC9 /* MockUserTabStorage.swift in Sources */,
+				655AFA6D2A09B3F6005B9BC9 /* DoubleShakeDetector+Math.swift in Sources */,
 				6509A2862A04924A00D7FA36 /* ErrorAlertFactory.swift in Sources */,
 				655AFA632A098780005B9BC9 /* User+Tab.swift in Sources */,
 				65EA252E29F1A48900760C4C /* View+Task.swift in Sources */,
 				65EA253129F1A59800760C4C /* MockMotionDetector.swift in Sources */,
+				655AFA6F2A09B438005B9BC9 /* DoubleShakeDetector+EventHandling.swift in Sources */,
 				65DB943629F1E3B800F22EB8 /* MotionEventViewModel.swift in Sources */,
 				6569B0E52A01CE6300BF820F /* DoubleShakeDetectionView.swift in Sources */,
 				655AFA672A098B31005B9BC9 /* UserError.swift in Sources */,
