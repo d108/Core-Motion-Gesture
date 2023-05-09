@@ -27,6 +27,8 @@
 		6569B0E22A01667500BF820F /* DoubleShakeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6569B0E12A01667500BF820F /* DoubleShakeDetector.swift */; };
 		6569B0E52A01CE6300BF820F /* DoubleShakeDetectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6569B0E42A01CE6300BF820F /* DoubleShakeDetectionView.swift */; };
 		657591892A09CD16001F07E6 /* UserDefaults+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657591882A09CD16001F07E6 /* UserDefaults+Group.swift */; };
+		6575918C2A09E7B4001F07E6 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6575918B2A09E7B4001F07E6 /* ButtonStyle.swift */; };
+		6575918E2A09E927001F07E6 /* Setting+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6575918D2A09E927001F07E6 /* Setting+UIKit.swift */; };
 		65DB943129F1DE8E00F22EB8 /* MotionEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB943029F1DE8E00F22EB8 /* MotionEventStream.swift */; };
 		65DB943329F1E04500F22EB8 /* MockMotionEventStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB943229F1E04500F22EB8 /* MockMotionEventStream.swift */; };
 		65DB943629F1E3B800F22EB8 /* MotionEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB943529F1E3B800F22EB8 /* MotionEventViewModel.swift */; };
@@ -73,6 +75,8 @@
 		6569B0E42A01CE6300BF820F /* DoubleShakeDetectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleShakeDetectionView.swift; sourceTree = "<group>"; };
 		657591882A09CD16001F07E6 /* UserDefaults+Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Group.swift"; sourceTree = "<group>"; };
 		6575918A2A09CDCA001F07E6 /* CoreMotionGesture.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoreMotionGesture.entitlements; sourceTree = "<group>"; };
+		6575918B2A09E7B4001F07E6 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		6575918D2A09E927001F07E6 /* Setting+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Setting+UIKit.swift"; sourceTree = "<group>"; };
 		65DB943029F1DE8E00F22EB8 /* MotionEventStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionEventStream.swift; sourceTree = "<group>"; };
 		65DB943229F1E04500F22EB8 /* MockMotionEventStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMotionEventStream.swift; sourceTree = "<group>"; };
 		65DB943529F1E3B800F22EB8 /* MotionEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionEventViewModel.swift; sourceTree = "<group>"; };
@@ -127,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				653CBBD52A05BB8100F590C1 /* Setting.swift */,
+				6575918D2A09E927001F07E6 /* Setting+UIKit.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -231,6 +236,7 @@
 		65EA252A29F1A2D800760C4C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6575918B2A09E7B4001F07E6 /* ButtonStyle.swift */,
 				65EA24FF29F19D7400760C4C /* ContentView.swift */,
 				6569B0E42A01CE6300BF820F /* DoubleShakeDetectionView.swift */,
 			);
@@ -372,6 +378,7 @@
 				655AFA692A098D36005B9BC9 /* MockUserTabStorage.swift in Sources */,
 				655AFA6D2A09B3F6005B9BC9 /* DoubleShakeDetector+Math.swift in Sources */,
 				6509A2862A04924A00D7FA36 /* ErrorAlertFactory.swift in Sources */,
+				6575918C2A09E7B4001F07E6 /* ButtonStyle.swift in Sources */,
 				655AFA632A098780005B9BC9 /* User+Tab.swift in Sources */,
 				65EA252E29F1A48900760C4C /* View+Task.swift in Sources */,
 				65EA253129F1A59800760C4C /* MockMotionDetector.swift in Sources */,
@@ -387,6 +394,7 @@
 				655AFA612A09866B005B9BC9 /* UserDefaults+Codable.swift in Sources */,
 				655AFA5D2A0884DB005B9BC9 /* MotionData.swift in Sources */,
 				6569B0E22A01667500BF820F /* DoubleShakeDetector.swift in Sources */,
+				6575918E2A09E927001F07E6 /* Setting+UIKit.swift in Sources */,
 				653CBBD62A05BB8100F590C1 /* Setting.swift in Sources */,
 				65EA24FE29F19D7400760C4C /* CoreMotionGestureApp.swift in Sources */,
 				65E9BF562A042D1F004F5E5A /* MotionError.swift in Sources */,

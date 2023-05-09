@@ -10,7 +10,6 @@ struct DoubleShakeDetectionView: View
     let circleWidth: CGFloat = 200
     let circleLinewidth: CGFloat = 4
     let circleColor: Color = .orange
-    let higButtonHeight: CGFloat = 44
     let buttonLabel: (MonitoringButtonState) -> Label =
     { state in
         Label(state.buttonText(), systemImage: state.imageName())
@@ -68,7 +67,7 @@ struct DoubleShakeDetectionView: View
             }.if(Setting.debugLayout) { $0.border(.purple) }
             VStack
             {
-                Spacer().frame(maxHeight: higButtonHeight)
+                Spacer().frame(maxHeight: Setting.higButtonHeight)
                 Button
                 {
                     switch motionEventViewModel.monitoringButtonState
@@ -83,8 +82,11 @@ struct DoubleShakeDetectionView: View
                     case .notStarted: buttonLabel(motionEventViewModel.monitoringButtonState)
                     }
                 }
-                Spacer().frame(maxHeight: higButtonHeight)
+                Spacer().frame(maxHeight: Setting.higButtonHeight)
             }.if(Setting.debugLayout) { $0.border(.pink) }
+                .buttonStyle(RoundedButton(
+                activated: motionEventViewModel.monitoringButtonState == .started)
+            )
         }.if(Setting.debugLayout) { $0.border(.green) }
             .padding(.vertical)
             .onChange(of: motionEventViewModel.monitoringButtonState)
