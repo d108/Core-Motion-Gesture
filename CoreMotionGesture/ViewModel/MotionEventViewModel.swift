@@ -36,7 +36,6 @@ final class MotionEventViewModel:
     }
     let motionDetector: DoubleShakeDetectorProtocol
     let waveImageDelay: TimeInterval = 1.5
-    let unknownErrorText = "⚠️ Unknown Error: Should Not Be Seen"
     let fatalErrorText = "Missing Publisher: Should Not Happen"
     var cancellables = [AnyCancellable]()
 
@@ -72,7 +71,7 @@ final class MotionEventViewModel:
                 case .finished: break
                 case .failure(let motionError):
                     self.errorAlert = ErrorAlert(message: motionError.failureReason ??
-                        self.unknownErrorText)
+                        Setting.unknownErrorText)
                     self.appendMotionError(motionError: motionError)
                 }
             }, receiveValue: { motionEvent in

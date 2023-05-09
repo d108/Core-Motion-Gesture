@@ -82,7 +82,6 @@ struct DoubleShakeDetectionView: View
                     case .started: buttonLabel(motionEventViewModel.monitoringButtonState)
                     case .notStarted: buttonLabel(motionEventViewModel.monitoringButtonState)
                     }
-
                 }
                 Spacer().frame(maxHeight: higButtonHeight)
             }.if(Setting.debugLayout) { $0.border(.pink) }
