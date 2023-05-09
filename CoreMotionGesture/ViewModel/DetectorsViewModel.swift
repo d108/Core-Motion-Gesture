@@ -10,6 +10,8 @@ protocol DetectorViewIDsProtocol
 final class DetectorsViewModel: ObservableObject, DetectorViewIDsProtocol
 {
     @Published var detectionViewIDs: [MonitorAxis: UUID]
+    @Published var axisViewIDs: [MonitorAxis: UUID]
+    @Published var lastDetectionViewIDForError: UUID?
 
     let idsDictionary: ()
         -> [MonitorAxis: UUID] =
@@ -27,10 +29,20 @@ final class DetectorsViewModel: ObservableObject, DetectorViewIDsProtocol
     init()
     {
         _detectionViewIDs = Published(initialValue: idsDictionary())
+        _axisViewIDs = Published(initialValue: idsDictionary())
     }
 
     func resetDetectorViewID(axis: MonitorAxis)
     {
         detectionViewIDs[axis] = UUID()
+    }
+
+    // Record the last detector view ID used to display an error.
+    // It allows us to disable animation when the view is reloaded.
+    func resetDetectorViewIDForError(axis: MonitorAxis)
+    {
+        let id = UUID()
+        detectionViewIDs[axis] = id
+        lastDetectionViewIDForError = id
     }
 }

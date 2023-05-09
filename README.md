@@ -2,6 +2,7 @@
 
 <p float="left">
     <img src="image/double-shake-demo.png" width="248" />
+    <img src="image/CoreMotionGestureDemo.gif" width="248" />
     <img src="image/accelerometer_axes.png" width="385" /> 
 </p>
 

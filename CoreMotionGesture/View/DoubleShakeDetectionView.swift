@@ -4,25 +4,29 @@ struct DoubleShakeDetectionView: View
 {
     let vspace: CGFloat = 20
     let padding: CGFloat = 20
-    let visible: CGFloat = 100
-    let invisible: CGFloat = 0
-    let axisFontSize: CGFloat = 72
-    let circleWidth: CGFloat = 200
-    let circleLinewidth: CGFloat = 4
-    let circleColor: Color = .orange
+    let axisScaleStart: CGFloat = 0.25
+    let axisScaleEnd: CGFloat = 1
+    let axisExpandAfter: TimeInterval = 0.1
+    let axis: MonitorAxis
     let buttonLabel: (MonitoringButtonState) -> Label =
     { state in
         Label(state.buttonText(), systemImage: state.imageName())
     }
     let testErrorText = "Test Error"
     let hapticGenerator: HapticGeneratorProtocol?
-    @ObservedObject var motionEventViewModel: MotionEventViewModel
-    @EnvironmentObject var detectorsViewModel: DetectorsViewModel
     let errorAlertFactory: (MotionEventViewModel, DetectorsViewModel)
         -> ErrorAlertFactory =
     {
         ErrorAlertFactory(motionEventViewModel: $0, detectorsViewModel: $1)
     }
+    let newViewWasForError: (DetectorsViewModel, MonitorAxis) -> Bool =
+    { viewModel, axis in
+        viewModel.lastDetectionViewIDForError == viewModel.detectionViewIDs[axis]
+    }
+    @ObservedObject var motionEventViewModel: MotionEventViewModel
+    @EnvironmentObject var detectorsViewModel: DetectorsViewModel
+    @State private var shouldExpand: Bool
+    @State private var animationValue: Int
 
     init(
         hapticGenerator: HapticGeneratorProtocol?,
@@ -30,6 +34,9 @@ struct DoubleShakeDetectionView: View
     ) {
         self.hapticGenerator = hapticGenerator
         self.motionEventViewModel = motionEventViewModel
+        self.axis = motionEventViewModel.motionDetector.monitorAxis
+        _shouldExpand = State(initialValue: true)
+        _animationValue = State(initialValue: 0)
     }
 
     var body: some View
@@ -52,19 +59,26 @@ struct DoubleShakeDetectionView: View
                 Text(testErrorText)
             }
             Spacer()
-            ZStack
+            AxisView(motionEventViewModel: motionEventViewModel)
+                .id(detectorsViewModel.axisViewIDs[axis])
+                .scaleEffect(shouldExpand &&
+                    !newViewWasForError(detectorsViewModel, axis)
+                    ? axisScaleStart : axisScaleEnd
+                )
+                .animation(AnimationFactory.lessBounce(), value: animationValue)
+                .onAppear
             {
-                Image(systemName: MonitoringSystemImage.doubleShaked.rawValue)
-                    .resizable(resizingMode: .stretch)
-                    .opacity(motionEventViewModel.doubleShaked ? visible : invisible)
-                    .frame(maxWidth: .infinity)
-                Text(motionEventViewModel.motionDetector.monitorAxis.asText())
-                    .font(.system(size: axisFontSize))
-                    .foregroundColor(circleColor)
-                    .overlay(Circle()
-                        .stroke(circleColor, lineWidth: circleLinewidth)
-                        .frame(width: circleWidth))
-            }.if(Setting.debugLayout) { $0.border(.purple) }
+                shouldExpand = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + axisExpandAfter)
+                {
+                    self.shouldExpand = false
+                    let skipAnimation = newViewWasForError(detectorsViewModel, axis)
+                    if !skipAnimation
+                    {
+                        animationValue = 1
+                    }
+                }
+            }
             VStack
             {
                 Spacer().frame(maxHeight: Setting.higButtonHeight)

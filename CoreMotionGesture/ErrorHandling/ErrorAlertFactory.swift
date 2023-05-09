@@ -32,7 +32,7 @@ struct ErrorAlertFactory
                     .first?.failureReason ?? unknownError),
             dismissButton: .default(Text(okay))
             {
-                self.detectorsViewModel.resetDetectorViewID(axis: axis)
+                self.detectorsViewModel.resetDetectorViewIDForError(axis: axis)
             }
         )
     }

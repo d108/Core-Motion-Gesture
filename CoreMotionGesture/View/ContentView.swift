@@ -73,6 +73,7 @@ struct ContentView: View
             .onChange(of: selectedTab)
         { selectedTab in
             userTabStorage.storeTab(selectedTab: selectedTab)
+            detectorsViewModel.resetDetectorViewID(axis: selectedTab)
         }
     }
 }
