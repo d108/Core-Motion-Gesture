@@ -35,27 +35,6 @@ extension DoubleShakeDetector
         motionEventStream?.sendMotionError(error: error)
     }
 
-    func accelerationValue(data: CMAccelerometerData) -> Double
-    {
-        var accelerationValue: Double?
-
-        switch monitorAxis
-        {
-        case .x:
-            accelerationValue = data.acceleration.x
-        case .y:
-            accelerationValue = data.acceleration.y
-        case .z:
-            accelerationValue = data.acceleration.z
-        }
-        if let accelerationValue = accelerationValue
-        {
-            return accelerationValue
-        }
-
-        return 0.0
-    }
-
     private func axisMatchesEvent(motionEvent: MotionEvent) -> Bool
     {
         var matches = true

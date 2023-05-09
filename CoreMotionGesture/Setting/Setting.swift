@@ -1,7 +1,10 @@
+import Foundation
+
 struct Setting
 {
     static var debugLayout = false
     static var defaultTab = MonitorAxis.x
+    static var waveImageDelay: TimeInterval = 1.5
 }
 
 extension Setting

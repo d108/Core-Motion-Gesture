@@ -35,13 +35,13 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
     let readingMinimum = 10 // Lower value is more sensitive
     let keepValueCount = 4
     let shakeDetectionMinimum = 2
-
     let timeWindowMin: TimeInterval = 0.18
     let timeWindowMax: TimeInterval = 0.65
     let accelerometerUpdateInterval: TimeInterval = 1 / 100 // 100 Hz
     let motionEventStream: MotionEventStreamProtocol?
     let monitorAxis: MonitorAxis
     let fatalErrorText = "⚠️ Missing Stream: Should Not Happen"
+    let stddevThreshold = 0.2 // If the value is too high, detections will fail
 
     init(
         motionManager: CMMotionManager,
@@ -63,7 +63,19 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
         var startTime = Date()
         var endTime = Date()
         var shouldIncrementShakeCount = true
-        var outsideWindowCount = 0  // Data received outside the detection window
+        var outsideWindowCount = 0 // Data received outside the detection window
+
+        let accelerationValue: (CMAccelerometerData, MonitorAxis) -> Double =
+        { data, axis in
+            var accelerationValue: Double = 0.0
+            switch monitorAxis
+            {
+            case .x: accelerationValue = data.acceleration.x
+            case .y: accelerationValue = data.acceleration.y
+            case .z: accelerationValue = data.acceleration.z
+            }
+            return accelerationValue
+        }
 
         if motionManager.isAccelerometerAvailable
         {
@@ -73,7 +85,9 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
             { data, error in
                 guard error == nil else
                 {
-                    sendMotionError(error: .accelerometerFailed(error?.localizedDescription))
+                    sendMotionError(
+                        error: .accelerometerFailed(error?.localizedDescription)
+                    )
                     return
                 }
                 guard let data = data else
@@ -81,19 +95,24 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
                     sendMotionError(error: .noDataAvailable)
                     return
                 }
-                let value = accelerationValue(data: data)
+                let value = accelerationValue(data, monitorAxis)
 
                 // When not using the main queue, EXC_BAD_ACCESS happens here.
                 motionValues.append(value)
+                let stddev = standardDeviation(values: motionValues)
 
                 // Start detection of the first shake.
-                if readingCount <= readingMinimum, shakeCount < 1
+                if readingCount <= readingMinimum,
+                    shakeCount < 1,
+                    stddev < stddevThreshold
                 {
                     readingCount += 1
                 }
 
                 // Start detection of the second shake.
-                if readingCount <= readingMinimum, shakeCount >= 1
+                if readingCount <= readingMinimum,
+                    shakeCount >= 1,
+                    stddev < stddevThreshold
                 {
                     readingCount += 1
                     if readingCount > readingMinimum - 2
@@ -105,7 +124,7 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
                 // We seed readingMinimum readings to ensure detection is active and stable.
                 if readingCount > readingMinimum
                 {
-                    if fabs(standardDeviation(values: motionValues)) > motionCutoff
+                    if stddev > motionCutoff
                     {
                         if shouldIncrementShakeCount
                         {
@@ -121,9 +140,11 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
                     let insideTimeWindow: (Date, Date, TimeInterval, TimeInterval) -> Bool =
                     { start, end, min, max in
                         let interval = end.timeIntervalSince(start)
-                        return interval >= min && interval <= max
+                        let inRange = interval >= min && interval <= max
+                        return inRange
                     }
-                    if shakeCount >= shakeDetectionMinimum || outsideWindowCount >= shakeDetectionMinimum
+                    if shakeCount >= shakeDetectionMinimum ||
+                        outsideWindowCount >= shakeDetectionMinimum
                     {
                         endTime = Date()
                         assert(startTime < endTime)

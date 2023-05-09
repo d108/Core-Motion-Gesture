@@ -35,7 +35,6 @@ final class MotionEventViewModel:
         }
     }
     let motionDetector: DoubleShakeDetectorProtocol
-    let waveImageDelay: TimeInterval = 1.5
     let fatalErrorText = "Missing Publisher: Should Not Happen"
     var cancellables = [AnyCancellable]()
 
@@ -76,7 +75,7 @@ final class MotionEventViewModel:
                 }
             }, receiveValue: { motionEvent in
                 self.doubleShaked = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.waveImageDelay)
+                DispatchQueue.main.asyncAfter(deadline: .now() + Setting.waveImageDelay)
                 {
                     self.doubleShaked = false
                 }
