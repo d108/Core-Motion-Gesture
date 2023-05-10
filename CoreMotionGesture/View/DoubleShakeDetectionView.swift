@@ -51,6 +51,7 @@ struct DoubleShakeDetectionView: View
             Text("The motion can be used as a non-screen-based gesture in apps.")
                 .font(.caption)
                 .padding(padding)
+            // Test error button
             Button
             {
                 motionEventViewModel.motionDetector
@@ -59,6 +60,7 @@ struct DoubleShakeDetectionView: View
                 Text(testErrorText)
             }
             Spacer()
+            // Axis view
             AxisView(motionEventViewModel: motionEventViewModel)
                 .id(detectorsViewModel.axisViewIDs[axis])
                 .scaleEffect(shouldExpand &&
@@ -79,6 +81,7 @@ struct DoubleShakeDetectionView: View
                     }
                 }
             }
+            // Monitoring button
             VStack
             {
                 Spacer().frame(maxHeight: Setting.higButtonHeight)
@@ -99,7 +102,7 @@ struct DoubleShakeDetectionView: View
                 Spacer().frame(maxHeight: Setting.higButtonHeight)
             }.if(Setting.debugLayout) { $0.border(.pink) }
                 .buttonStyle(RoundedButton(
-                activated: motionEventViewModel.monitoringButtonState == .started)
+                isActivated: motionEventViewModel.monitoringButtonState == .started)
             )
         }.if(Setting.debugLayout) { $0.border(.green) }
             .padding(.vertical)

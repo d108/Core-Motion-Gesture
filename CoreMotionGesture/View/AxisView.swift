@@ -29,11 +29,11 @@ struct AxisView: View
                 Image(systemName: MonitoringSystemImage.doubleShaked.rawValue)
                     .resizable(resizingMode: .stretch)
                     .scaleEffect(motionEventViewModel.doubleShaked
-                        ? CGSize(width: 1.0, height: waveHeightStart) :
+                        ? CGSize(width: 1.0, height: waveHeightStart):
                         CGSize(width: 1.0, height: waveHeightEnd)
-                )
-                    .animation(AnimationFactory.moreBounce())
-            } .opacity(motionEventViewModel.doubleShaked ? visible : invisible)
+                    )
+                    .animation(AnimationFactory.moreBounce().delay(0.2).repeatForever())
+            }.opacity(motionEventViewModel.doubleShaked ? visible : invisible)
             // Axis label view
             Text(motionEventViewModel.motionDetector.monitorAxis.asText())
                 .font(.system(size: axisFontSize))

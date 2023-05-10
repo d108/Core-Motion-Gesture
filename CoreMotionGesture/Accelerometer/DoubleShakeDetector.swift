@@ -68,7 +68,7 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
         let accelerationValue: (CMAccelerometerData, MonitorAxis) -> Double =
         { data, axis in
             var accelerationValue: Double = 0.0
-            switch monitorAxis
+            switch axis
             {
             case .x: accelerationValue = data.acceleration.x
             case .y: accelerationValue = data.acceleration.y
