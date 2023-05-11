@@ -20,7 +20,7 @@
                BlueprintIdentifier = "65EA250929F19D7500760C4C"
                BuildableName = "UnitTests.xctest"
                BlueprintName = "UnitTests"
-               ReferencedContainer = "container:CoreMotionGesture.xcodeproj">
+               ReferencedContainer = "container:Core-Motion-Gesture.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

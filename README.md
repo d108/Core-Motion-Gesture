@@ -6,9 +6,12 @@
     <img src="image/accelerometer_axes.png" width="385" /> 
 </p>
 
-In SwiftUI for iOS, we use the accelerometer to detect a custom gesture of a user shaking their device in a double shaking motion.
-For example, the Z-axis for an iPhone or iPad corresponds to a perpendicular line projected through the face of the screen when it is positioned parallel to the ground, like a tabletop.
+The mobile accelerometer has various practical uses such as detecting changes in motion, orientation, and environment. This technology can be utilized to enhance gaming and virtual reality, navigation and location, as well as fitness tracking. Additionally, it has health and safety applications including detecting tremors in Parkinson's patients, seizures in epileptic patients, changes in posture, falls and crashes.
+
+In SwiftUI, we use the accelerometer to detect a custom gesture of a user shaking their device in a double shaking motion. Our project represents a clean, modern approach to iOS development and is fun to play with.
+
 We require a double motion to distinguish a user's signal in a noisy background of detections sensitive to small movements.
+As an example, the Z-axis for an iPhone or iPad corresponds to a perpendicular line projected through the face of the screen when it is positioned parallel to the ground, like a tabletop. Therefore, we can detect a double shake motion by monitoring the Z-axis for two consecutive peaks.
 
 - We show a waveform image when we detect a double shake motion.
 - The motion can be made with a crisp, double wrist flick, with the final move a little snappier, within a given time window.
@@ -21,9 +24,9 @@ Please find some notes about the detector listed below.
 
 ## Install
 
-    $ git clone https://github.com/d108/CoreMotionGesture.git
-    $ cd CoreMotionGesture
-    $ open CoreMotionGesture.xcodeproj
+    $ git clone https://github.com/d108/Core-Motion-Gesture.git
+    $ cd Core-Motion-Gesture
+    $ open Core-Motion-Gesture.xcodeproj
 
 ## Project notes
 
@@ -52,11 +55,11 @@ The views in question have the following form:
 
 ### Choosing a site for error handling
 
-To solve our need to handle errors, we have created a `MotionError` that conforms to `LocalizedError` and changed our Publisher to `AnyPublisher<MotionEvent, MotionError>.` Our Publisher contract stipulates that any error will cause completion of the stream by a failure. Consequently, we can align our design to the event stream and consider all operations as completed during an error condition.
+To solve our need to handle errors, we have created a `MotionError` that conforms to `LocalizedError` and changed our Publisher to `AnyPublisher<MotionEvent, MotionError>.` Our Publisher contract stipulates that any error will cause completion of the stream by a failure. This allows us to align our design with the event stream, and consider all operations completed during an error condition.
 
-In case an error occurs, we can regenerate the entire setup by regenerating the detector view and its dependencies. We won't attempt to recover from errors at a lower level than our Publisher since it is standard operating procedure for immutable value types to return a freshly constructed value.
+In case an error occurs, we can regenerate the entire setup by creating a new instance of the detector view and its dependencies. We won't attempt to recover from errors at a lower level than our Publisher. In functional programming, it is customary for immutable value types to provide a newly constructed value as a return type.
 
-To handle errors at the site of the detector view's creation, we organize our code by grouping our dependency graph's creation at a single site. We assign a new UUID for a detector view to trigger the regeneration of the entire setup, which we manage in a separate view model. The resulting view factory appears as the following code.
+In SwiftUI, we can use a view's ID to easily trigger a regeneration of the entire view hierarchy. For convenience, we have established a separate view model to track view IDs. The resulting view factory demonstrates how we have isolated the view, as shown in the following code.
 
     DoubleShakeDetectionView(
         hapticGenerator: hapticGenerator,

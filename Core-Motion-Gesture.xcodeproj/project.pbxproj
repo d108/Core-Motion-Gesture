@@ -345,7 +345,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 65EA24F529F19D7400760C4C /* Build configuration list for PBXProject "CoreMotionGesture" */;
+			buildConfigurationList = 65EA24F529F19D7400760C4C /* Build configuration list for PBXProject "Core-Motion-Gesture" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -660,7 +660,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		65EA24F529F19D7400760C4C /* Build configuration list for PBXProject "CoreMotionGesture" */ = {
+		65EA24F529F19D7400760C4C /* Build configuration list for PBXProject "Core-Motion-Gesture" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65EA251C29F19D7600760C4C /* Debug */,
