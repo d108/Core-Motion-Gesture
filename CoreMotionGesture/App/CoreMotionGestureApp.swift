@@ -19,8 +19,9 @@ enum AppError: LocalizedError
 struct CoreMotionGestureApp: App
 {
     let hapticGenerator: HapticGeneratorProtocol
-    let userTabStorage: UserTabStorageProtocol
+    let userSettingStorage: UserSettingStorageProtocol
     let tabSelectionViewModel: TabSelectionViewModel
+    let appRunnerViewModel: AppRunnerViewModel
 
     init()
     {
@@ -36,8 +37,9 @@ struct CoreMotionGestureApp: App
                 Setting.unknownErrorText
             )
         }
-        self.userTabStorage = UserTabStorage(defaults: defaults)
+        self.userSettingStorage = UserSettingStorage(defaults: defaults)
         self.tabSelectionViewModel = TabSelectionViewModel(defaults: defaults)
+        self.appRunnerViewModel = AppRunnerViewModel(userSettingStorage: userSettingStorage)
     }
 
     var body: some Scene
@@ -46,7 +48,9 @@ struct CoreMotionGestureApp: App
         {
             ContentView(
                 hapticGenerator: hapticGenerator,
-                tabSelectionViewModel: tabSelectionViewModel
+                tabSelectionViewModel: tabSelectionViewModel,
+                appRunnerViewModel: appRunnerViewModel,
+                userSettingStorage: userSettingStorage
             )
         }
     }

@@ -6,6 +6,25 @@
     <img src="image/accelerometer_axes.png" width="385" /> 
 </p>
 
+Our project has multiple purposes:
+
+1. Share our Core Motion algorithm for continuous detection of user activity while using minimal memory.
+
+    - We limit our storing of samples during monitoring while reading data one hundred times per second (100 Hz).
+    - The original Objective-C code was ported from one of our apps published on the App Store.
+
+2. Demonstrate our App Runner technique for acting like a microscope revealing state handling patterns in an app.
+
+    - It replaces manual testing and other UI testing techniques.
+    - It can automatically generate demonstration videos.
+    - It is the same technique we used to deliver software to millions of devices.
+
+If your app is modeled with view models, declarative views, and reactive streams, you have all the ingredients for advanced UI and state testing.
+Our app runner technique reveals state handling patterns normally missed by manual testing and other UI testing techniques.
+It is like having a mob of testers. We highly encourage you to try it because it will show you things you never knew about your app.
+
+## Background
+
 The mobile accelerometer has various practical uses such as detecting changes in motion, orientation, and environment. This technology can be utilized to enhance gaming and virtual reality, navigation and location, as well as fitness tracking. Additionally, it has health and safety applications including detecting tremors in Parkinson's patients, seizures in epileptic patients, changes in posture, falls and crashes.
 
 In SwiftUI, we use the accelerometer to detect a custom gesture of a user shaking their device in a double shaking motion. Our project represents a clean, modern approach to iOS development and is fun to play with.

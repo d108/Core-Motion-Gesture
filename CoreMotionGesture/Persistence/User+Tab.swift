@@ -4,8 +4,8 @@ protocol UserTabStorageProtocol
 {
     var defaults: UserDefaults { get }
 
-    func storeTab(selectedTab: MonitorAxis)
-    func loadTab() throws -> MonitorAxis
+    func storeTab(selectedTab: MonitorAxisTab)
+    func loadTab() throws -> MonitorAxisTab
 }
 
 struct UserTabStorage: UserTabStorageProtocol
@@ -18,14 +18,14 @@ struct UserTabStorage: UserTabStorageProtocol
         self.defaults = defaults
     }
 
-    func storeTab(selectedTab: MonitorAxis)
+    func storeTab(selectedTab: MonitorAxisTab)
     {
         defaults.setCodable(value: selectedTab, forKey: key)
     }
 
-    func loadTab() throws -> MonitorAxis
+    func loadTab() throws -> MonitorAxisTab
     {
-        let axis: MonitorAxis? = defaults.getCodable(forKey: key)
+        let axis: MonitorAxisTab? = defaults.getCodable(forKey: key)
         guard let axis = axis
             else { throw UserError.noDataAvailable }
         

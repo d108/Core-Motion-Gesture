@@ -34,6 +34,7 @@ final class DetectorsViewModel: ObservableObject, DetectorViewIDsProtocol
 
     func resetDetectorViewID(axis: MonitorAxis)
     {
+        print("reset detector view")
         detectionViewIDs[axis] = UUID()
     }
 

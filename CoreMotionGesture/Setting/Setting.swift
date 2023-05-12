@@ -2,9 +2,10 @@ import Foundation
 
 struct Setting
 {
-    static var debugLayout = false
+    static var shouldDebugLayout = false
     static var defaultTab = MonitorAxis.x
     static var waveImageDelay: TimeInterval = 1.5
+    static let vspace: CGFloat = 20
 }
 
 extension Setting

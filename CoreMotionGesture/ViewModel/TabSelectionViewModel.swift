@@ -23,7 +23,8 @@ final class TabSelectionViewModel: ObservableObject, TabSelectionProtocol, TabSe
         do
         {
             _selectedTab = Published(initialValue: try userTabStorage.loadTab())
-        } catch {
+        } catch
+        {
             _selectedTab = Published(initialValue: Setting.defaultTab)
         }
     }
