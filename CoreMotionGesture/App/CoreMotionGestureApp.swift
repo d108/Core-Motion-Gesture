@@ -10,7 +10,7 @@ enum AppError: LocalizedError
         switch self
         {
         case .storageFailedToInitialize(let suiteName):
-            return "UserDefaults with suite name \(suiteName) failed to initialize."
+            return "🚨UserDefaults with suite name \(suiteName) failed to initialize."
         }
     }
 }
@@ -20,6 +20,7 @@ struct CoreMotionGestureApp: App
 {
     let hapticGenerator: HapticGeneratorProtocol
     let userTabStorage: UserTabStorageProtocol
+    let tabSelectionViewModel: TabSelectionViewModel
 
     init()
     {
@@ -36,6 +37,7 @@ struct CoreMotionGestureApp: App
             )
         }
         self.userTabStorage = UserTabStorage(defaults: defaults)
+        self.tabSelectionViewModel = TabSelectionViewModel(defaults: defaults)
     }
 
     var body: some Scene
@@ -44,7 +46,7 @@ struct CoreMotionGestureApp: App
         {
             ContentView(
                 hapticGenerator: hapticGenerator,
-                userTabStorage: userTabStorage
+                tabSelectionViewModel: tabSelectionViewModel
             )
         }
     }

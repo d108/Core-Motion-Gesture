@@ -3,9 +3,10 @@ import CoreMotion
 
 struct ContentView: View
 {
-    @State private var selectedTab: MonitorAxis
     @StateObject var detectorsViewModel: DetectorsViewModel =
         DetectorsViewModel()
+    @ObservedObject var tabSelectionViewModel: TabSelectionViewModel
+
     let tabLabel: (MonitorAxis) -> Label =
     { axis in
         Label(axis.asAxisText(), systemImage: axis.imageName())
@@ -25,20 +26,13 @@ struct ContentView: View
         MotionEventViewModel(motionDetector: detector)
     }
     let hapticGenerator: HapticGeneratorProtocol?
-    let userTabStorage: UserTabStorageProtocol
 
     init(
         hapticGenerator: HapticGeneratorProtocol? = nil,
-        userTabStorage: UserTabStorageProtocol
+        tabSelectionViewModel:TabSelectionViewModel
     ) {
         self.hapticGenerator = hapticGenerator
-        self.userTabStorage = userTabStorage
-        do
-        {
-            _selectedTab = State(initialValue: try userTabStorage.loadTab())
-        } catch {
-            _selectedTab = State(initialValue: Setting.defaultTab)
-        }
+        self.tabSelectionViewModel = tabSelectionViewModel
     }
 
     // View factory
@@ -57,7 +51,7 @@ struct ContentView: View
 
     var body: some View
     {
-        return TabView(selection: $selectedTab)
+        return TabView(selection: $tabSelectionViewModel.selectedTab)
         {
             ForEach(MonitorAxis.allCases)
             { axis in
@@ -70,9 +64,8 @@ struct ContentView: View
                     .id(detectorsViewModel.detectionViewIDs[axis])
             }
         }
-            .onChange(of: selectedTab)
+        .onChange(of: tabSelectionViewModel.selectedTab)
         { selectedTab in
-            userTabStorage.storeTab(selectedTab: selectedTab)
             detectorsViewModel.resetDetectorViewID(axis: selectedTab)
         }
     }
@@ -82,8 +75,9 @@ struct ContentView_Previews: PreviewProvider
 {
     static var previews: some View
     {
+        let tabSelectionViewModel = TabSelectionViewModel(defaults: MockUserDefaults())
         ContentView(
-            userTabStorage: MockUserTabStorage(defaults: MockUserDefaults())
+            tabSelectionViewModel: tabSelectionViewModel
         )
     }
 }
