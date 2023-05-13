@@ -8,12 +8,10 @@ class TabViewRunner: AppRunnerProtocol
     let delay: TimeInterval = 2
 
     init(
-        tabSelectionViewModel: TabSelectionViewModel,
-        cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
+        tabSelectionViewModel: TabSelectionViewModel
     )
     {
         self.tabSelectionViewModel = tabSelectionViewModel
-        self.cancellables = cancellables
     }
 
     func cancelAll()

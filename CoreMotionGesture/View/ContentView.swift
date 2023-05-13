@@ -4,7 +4,7 @@ import Combine
 
 struct ContentView: View
 {
-    @StateObject var detectorsViewModel: DetectorsViewModel =
+    @ObservedObject var detectorsViewModel: DetectorsViewModel =
         DetectorsViewModel()
     @ObservedObject var tabSelectionViewModel: TabSelectionViewModel
     @ObservedObject var appRunnerViewModel: AppRunnerViewModel
@@ -57,9 +57,9 @@ struct ContentView: View
             hapticGenerator: hapticGenerator,
             motionEventViewModel: coreMotionGestureViewModel(
                 motionDetector(monitorAxis, motionEventStream)
-            )
+            ),
+            detectorsViewModel: detectorsViewModel
         )
-            .environmentObject(detectorsViewModel)
             .environmentObject(appRunnerViewModel)
     }
 

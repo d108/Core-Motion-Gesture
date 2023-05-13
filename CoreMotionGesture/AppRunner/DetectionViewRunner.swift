@@ -1,23 +1,23 @@
 import Foundation
 import Combine
 
-// Getting DetectorsViewModel doesn't work through the environment object
-// due to Variable 'self.detectionViewRunner' used before being initialized
+// Getting a DetectorsViewModel doesn't work through the environment object when we need
+// it at init time. However, we don't need it here because of the explanation below.
+//
+// View generation using resetDetectorViewIDForError() in DetectorsViewModel interferes
+// with the testing process. We start getting an overrun of views associated with the
+// TabViewRunner.
 class DetectionViewRunner: AppRunnerProtocol
 {
+    let errorClearDeadline: DispatchTime = .now() + 1
     var cancellables = Set<AnyCancellable>()
     let motionEventViewModel: MotionEventViewModel
-//    let detectorsViewModel: DetectorsViewModel
 
     init(
-        cancellables: Set<AnyCancellable> = Set<AnyCancellable>(),
         motionEventViewModel: MotionEventViewModel
-//        detectorsViewModel: DetectorsViewModel
     )
     {
-        self.cancellables = cancellables
         self.motionEventViewModel = motionEventViewModel
-//        self.detectorsViewModel = detectorsViewModel
     }
 
     func cancelAll()
@@ -27,7 +27,6 @@ class DetectionViewRunner: AppRunnerProtocol
 
     func runDetectionView()
     {
-        var isMonitoring = motionEventViewModel.monitoringButtonState == .started
         let buttonPresser = PassthroughSubject<ButtonPress, Never>()
         buttonPresser
             .sink(receiveValue:
@@ -40,21 +39,28 @@ class DetectionViewRunner: AppRunnerProtocol
                         self.motionEventViewModel.doubleShaked = true
                     }
                 } else
-                { self.motionEventViewModel.doubleShaked = false }
+                {
+                    self.motionEventViewModel.doubleShaked = false
+                }
             })
             .store(in: &cancellables)
         let timer = Timer.publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
         timer.sink
         { _ in
+            var isMonitoring = self.motionEventViewModel.monitoringButtonState == .started
             if EventDecider.randomInPercent(percent: 0.1)
             {
                 self.motionEventViewModel.motionDetector
                     .motionEventStream?.sendMotionError(error: .testError)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2)
+                DispatchQueue.main.asyncAfter(deadline: self.errorClearDeadline)
                 {
-                    // TODO: Clear the error
-                    // detectorsViewModel.resetDetectorViewIDForError(axis: axis)
+                    // Not causing view regeneration here is necessary to prevent unwanted
+                    // TabViewRunner instances. Therefore, we have disabled the following
+                    // code.
+                    //    self.detectorsViewModel.resetDetectorViewIDForError(
+                    //        axis: self.motionEventViewModel.motionDetector.monitorAxis
+                    //    )
                 }
             }
             if EventDecider.randomInPercent(percent: 0.6)
@@ -69,7 +75,11 @@ class DetectionViewRunner: AppRunnerProtocol
             {
                 self.motionEventViewModel.monitoringButtonState = .notStarted
                 buttonPresser.send(completion: .finished)
-                // TODO: Create a new view using the detectors view model
+                // We should not create a new view using the detectors view model
+                // according to the following code.
+                //     self.detectorsViewModel.resetDetectorViewIDForError(
+                //         axis:  self.motionEventViewModel.motionDetector.monitorAxis
+                //     )
             }
         }
             .store(in: &cancellables)

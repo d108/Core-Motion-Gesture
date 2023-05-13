@@ -26,7 +26,7 @@ struct UserSettingView: View
                 .padding()
                 .layoutPriority(2)
                 .if(Setting.shouldDebugLayout) { $0.border(.green) }
-            Text("Slide to dismiss this view if needed on iOS 14. View regeneration interferes with the button.")
+            Text("After pressing dismiss, slide to dismiss this view if needed on iOS 14. View regeneration interferes with the dismiss action.")
                 .font(.caption)
                 .padding()
                 .layoutPriority(2)

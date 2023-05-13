@@ -27,7 +27,7 @@ struct DoubleShakeDetectionView: View
     }
     let detectionViewRunner: DetectionViewRunner
     @ObservedObject var motionEventViewModel: MotionEventViewModel
-    @EnvironmentObject var detectorsViewModel: DetectorsViewModel
+    @ObservedObject var detectorsViewModel: DetectorsViewModel
     @EnvironmentObject var appRunnerViewModel: AppRunnerViewModel
     @State private var shouldExpand: Bool
     @State private var animationValue: Int
@@ -35,7 +35,8 @@ struct DoubleShakeDetectionView: View
 
     init(
         hapticGenerator: HapticGeneratorProtocol?,
-        motionEventViewModel: MotionEventViewModel
+        motionEventViewModel: MotionEventViewModel,
+        detectorsViewModel: DetectorsViewModel
     )
     {
         self.hapticGenerator = hapticGenerator
@@ -43,6 +44,7 @@ struct DoubleShakeDetectionView: View
         self.axis = motionEventViewModel.motionDetector.monitorAxis
         _shouldExpand = State(initialValue: true)
         _animationValue = State(initialValue: 0)
+        self.detectorsViewModel = detectorsViewModel
         self.detectionViewRunner = DetectionViewRunner(
             motionEventViewModel: motionEventViewModel
         )
