@@ -16,7 +16,7 @@ extension Setting
     //
     // The purpose of using an app group is to ensure more reliable synchronization of
     // UserDefaults, especially when terminating the app during debugging.
-    static var suiteName = "group.com.ikiapps.CoreMotionGesture"
+    static var suiteName = "group.H8GGCD3NY7.com.ikiapps.CoreMotionGesture"
 }
 
 extension Setting

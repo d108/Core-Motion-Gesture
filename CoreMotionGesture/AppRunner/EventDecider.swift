@@ -1,7 +1,9 @@
+typealias Probability = Float
+
 struct EventDecider
 {
-    static func randomInPercent(percent: Float) -> Bool
+    static func random(with probability: Probability) -> Bool
     {
-        return Float.random(in: 0...1) <= percent
+        return Float.random(in: 0...1) <= probability
     }
 }

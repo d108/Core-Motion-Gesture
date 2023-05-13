@@ -12,10 +12,18 @@ protocol TabSelectionStorageProtocol
     var userTabStorage: UserTabStorageProtocol { get }
 }
 
-final class TabSelectionViewModel: ObservableObject, TabSelectionProtocol, TabSelectionStorageProtocol
+protocol TabViewRunnable
+{
+    func onTimeChange(tab: MonitorAxisTab)
+}
+
+final class TabSelectionViewModel:
+    ObservableObject,
+    TabSelectionProtocol,
+    TabSelectionStorageProtocol
 {
     var userTabStorage: UserTabStorageProtocol
-    @Published var selectedTab: MonitorAxisTab 
+    @Published var selectedTab: MonitorAxisTab
 
     init(defaults: UserDefaults)
     {
@@ -27,5 +35,13 @@ final class TabSelectionViewModel: ObservableObject, TabSelectionProtocol, TabSe
         {
             _selectedTab = Published(initialValue: Setting.defaultTab)
         }
+    }
+}
+
+extension TabSelectionViewModel: TabViewRunnable
+{
+    func onTimeChange(tab: MonitorAxisTab)
+    {
+        self.selectedTab = tab
     }
 }

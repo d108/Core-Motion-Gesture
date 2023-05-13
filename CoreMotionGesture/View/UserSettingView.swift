@@ -5,8 +5,8 @@ struct UserSettingView: View
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appRunnerViewModel: AppRunnerViewModel
     @EnvironmentObject var detectorsViewModel: DetectorsViewModel
+    @ObservedObject var userSettingViewModel: UserSettingViewModel
     let monitorAxis: MonitorAxisTab
-    let userSettingStorage: UserSettingStorageProtocol
 
     var body: some View
     {
@@ -14,10 +14,10 @@ struct UserSettingView: View
         {
             Spacer()
             Text("Automatic App Running")
-            Text("Reveal Flaws with Testing Patterns").padding()
+            Text("Reveal Flaws using Testing Patterns").padding()
             Group
             {
-                Toggle("Open Settings on Start", isOn: $appRunnerViewModel.shouldOpenSettingsOnStart).padding(.horizontal)                
+                Toggle("Open Settings on Start", isOn: $userSettingViewModel.shouldOpenSettingsOnStart).padding(.horizontal)
                 Toggle("Tab View Runner", isOn: $appRunnerViewModel.shouldRunTabView).padding(.horizontal)
                 Toggle("Detection View Runner", isOn: $appRunnerViewModel.shouldRunDetectionView).padding(.horizontal)
             }
@@ -37,34 +37,27 @@ struct UserSettingView: View
                 presentationMode.wrappedValue.dismiss()
             }
             Spacer().layoutPriority(1)
-                .onAppear
-            {
-                do
-                {
-                    let openSettingsOnStart = try userSettingStorage.loadShouldOpenSettingsOnStart()
-                    appRunnerViewModel.shouldOpenSettingsOnStart = openSettingsOnStart
-                } catch
-                {
-                    // TODO: Handle error
-                }
-            }
-        }.onChange(of: appRunnerViewModel.shouldOpenSettingsOnStart)
+        }.onChange(of: userSettingViewModel.shouldOpenSettingsOnStart)
         { openSettingsOnStart in
             print("will store \(openSettingsOnStart)")
-            userSettingStorage.storeShouldOpenSettingsOnStart(openSettingsOnStart: openSettingsOnStart)
+            userSettingViewModel.storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart: openSettingsOnStart)
         }
     }
 }
 
-struct SheetView_Previews: PreviewProvider
+struct UserSettingView_Previews: PreviewProvider
 {
     static var previews: some View
     {
+        let userSettingStorage = UserSettingStorage(defaults: MockUserDefaults())
+        let appRunnerViewModel = AppRunnerViewModel()
+        let userSettingViewModel = UserSettingViewModel(userSettingStorage: userSettingStorage)
         let mockAxis = MonitorAxis.x
-        let userSettingStorage = MockUserSettingStorage(defaults: MockUserDefaults())
+
         UserSettingView(
-            monitorAxis: mockAxis,
-            userSettingStorage: userSettingStorage
+            userSettingViewModel: userSettingViewModel,
+            monitorAxis: mockAxis
         )
+            .environmentObject(appRunnerViewModel)
     }
 }

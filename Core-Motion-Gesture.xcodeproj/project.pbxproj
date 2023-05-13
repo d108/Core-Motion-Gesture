@@ -13,10 +13,12 @@
 		651E6F2929FF053B00C43B7C /* MockHapticGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651E6F2829FF053B00C43B7C /* MockHapticGenerator.swift */; };
 		653CBBD32A05BAE900F590C1 /* View+Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CBBD22A05BAE900F590C1 /* View+Condition.swift */; };
 		653CBBD62A05BB8100F590C1 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653CBBD52A05BB8100F590C1 /* Setting.swift */; };
+		6543A5412A10327500977A48 /* TabViewRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6543A5402A10327500977A48 /* TabViewRunner.swift */; };
+		6543A5432A103AE700977A48 /* UserSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6543A5422A103AE700977A48 /* UserSettingViewModel.swift */; };
+		6543A5452A10460700977A48 /* MotionEventViewRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6543A5442A10460700977A48 /* MotionEventViewRunner.swift */; };
+		6543A5472A10477A00977A48 /* MotionEventViewModel+Runnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6543A5462A10477A00977A48 /* MotionEventViewModel+Runnable.swift */; };
 		6545589829F232D200B5B0F1 /* MonitorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6545589729F232D200B5B0F1 /* MonitorState.swift */; };
 		65587D5C2A0EDBD40086D1F4 /* UserSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65587D5B2A0EDBD40086D1F4 /* UserSettingView.swift */; };
-		65587D5F2A0EDBEB0086D1F4 /* DetectionViewRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65587D5D2A0EDBEB0086D1F4 /* DetectionViewRunner.swift */; };
-		65587D602A0EDBEB0086D1F4 /* TabViewRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65587D5E2A0EDBEB0086D1F4 /* TabViewRunner.swift */; };
 		65587D622A0EDC470086D1F4 /* AppRunnerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65587D612A0EDC470086D1F4 /* AppRunnerViewModel.swift */; };
 		65587D642A0EE3070086D1F4 /* EventDecider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65587D632A0EE3070086D1F4 /* EventDecider.swift */; };
 		65587D662A0EEC290086D1F4 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65587D652A0EEC290086D1F4 /* UserSetting.swift */; };
@@ -72,10 +74,12 @@
 		651E6F2829FF053B00C43B7C /* MockHapticGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHapticGenerator.swift; sourceTree = "<group>"; };
 		653CBBD22A05BAE900F590C1 /* View+Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Condition.swift"; sourceTree = "<group>"; };
 		653CBBD52A05BB8100F590C1 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		6543A5402A10327500977A48 /* TabViewRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewRunner.swift; sourceTree = "<group>"; };
+		6543A5422A103AE700977A48 /* UserSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingViewModel.swift; sourceTree = "<group>"; };
+		6543A5442A10460700977A48 /* MotionEventViewRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionEventViewRunner.swift; sourceTree = "<group>"; };
+		6543A5462A10477A00977A48 /* MotionEventViewModel+Runnable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MotionEventViewModel+Runnable.swift"; sourceTree = "<group>"; };
 		6545589729F232D200B5B0F1 /* MonitorState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorState.swift; sourceTree = "<group>"; };
 		65587D5B2A0EDBD40086D1F4 /* UserSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingView.swift; sourceTree = "<group>"; };
-		65587D5D2A0EDBEB0086D1F4 /* DetectionViewRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectionViewRunner.swift; sourceTree = "<group>"; };
-		65587D5E2A0EDBEB0086D1F4 /* TabViewRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewRunner.swift; sourceTree = "<group>"; };
 		65587D612A0EDC470086D1F4 /* AppRunnerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRunnerViewModel.swift; sourceTree = "<group>"; };
 		65587D632A0EE3070086D1F4 /* EventDecider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDecider.swift; sourceTree = "<group>"; };
 		65587D652A0EEC290086D1F4 /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
@@ -179,9 +183,9 @@
 			isa = PBXGroup;
 			children = (
 				659AE2572A0F2CD800472757 /* AppRunnerProtocol.swift */,
-				65587D5D2A0EDBEB0086D1F4 /* DetectionViewRunner.swift */,
 				65587D632A0EE3070086D1F4 /* EventDecider.swift */,
-				65587D5E2A0EDBEB0086D1F4 /* TabViewRunner.swift */,
+				6543A5442A10460700977A48 /* MotionEventViewRunner.swift */,
+				6543A5402A10327500977A48 /* TabViewRunner.swift */,
 			);
 			path = AppRunner;
 			sourceTree = "<group>";
@@ -209,7 +213,9 @@
 				65587D612A0EDC470086D1F4 /* AppRunnerViewModel.swift */,
 				656962E92A04441300E9CC4D /* DetectorsViewModel.swift */,
 				65DB943529F1E3B800F22EB8 /* MotionEventViewModel.swift */,
+				6543A5462A10477A00977A48 /* MotionEventViewModel+Runnable.swift */,
 				65BB29962A0DDD6B00E2618B /* TabSelectionViewModel.swift */,
+				6543A5422A103AE700977A48 /* UserSettingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -431,18 +437,19 @@
 			files = (
 				655AFA692A098D36005B9BC9 /* MockUserTabStorage.swift in Sources */,
 				655AFA6D2A09B3F6005B9BC9 /* DoubleShakeDetector+Math.swift in Sources */,
-				65587D602A0EDBEB0086D1F4 /* TabViewRunner.swift in Sources */,
 				6509A2862A04924A00D7FA36 /* ErrorAlertFactory.swift in Sources */,
 				6575918C2A09E7B4001F07E6 /* ButtonStyle.swift in Sources */,
 				659AE2582A0F2CD800472757 /* AppRunnerProtocol.swift in Sources */,
-				65587D5F2A0EDBEB0086D1F4 /* DetectionViewRunner.swift in Sources */,
 				655AFA632A098780005B9BC9 /* User+Tab.swift in Sources */,
 				65587D5C2A0EDBD40086D1F4 /* UserSettingView.swift in Sources */,
 				65EA252E29F1A48900760C4C /* View+Task.swift in Sources */,
 				65EA253129F1A59800760C4C /* MockMotionDetector.swift in Sources */,
 				657591892A09CD16001F07E6 /* UserDefaults+Group.swift in Sources */,
 				655AFA6F2A09B438005B9BC9 /* DoubleShakeDetector+EventHandling.swift in Sources */,
+				6543A5472A10477A00977A48 /* MotionEventViewModel+Runnable.swift in Sources */,
 				657E7F4E2A0AEE1B0072C11E /* AnimationFactory.swift in Sources */,
+				6543A5452A10460700977A48 /* MotionEventViewRunner.swift in Sources */,
+				6543A5432A103AE700977A48 /* UserSettingViewModel.swift in Sources */,
 				65587D682A0EECD90086D1F4 /* User+Setting.swift in Sources */,
 				65DB943629F1E3B800F22EB8 /* MotionEventViewModel.swift in Sources */,
 				6569B0E52A01CE6300BF820F /* DoubleShakeDetectionView.swift in Sources */,
@@ -453,6 +460,7 @@
 				65587D662A0EEC290086D1F4 /* UserSetting.swift in Sources */,
 				6545589829F232D200B5B0F1 /* MonitorState.swift in Sources */,
 				65EA250029F19D7400760C4C /* ContentView.swift in Sources */,
+				6543A5412A10327500977A48 /* TabViewRunner.swift in Sources */,
 				651E6F2429FEDDDE00C43B7C /* MotionEvent.swift in Sources */,
 				655AFA612A09866B005B9BC9 /* UserDefaults+Codable.swift in Sources */,
 				655AFA5D2A0884DB005B9BC9 /* MotionData.swift in Sources */,

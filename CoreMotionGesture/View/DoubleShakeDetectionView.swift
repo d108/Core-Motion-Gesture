@@ -25,13 +25,13 @@ struct DoubleShakeDetectionView: View
     { viewModel, axis in
         viewModel.lastDetectionViewIDForError == viewModel.detectionViewIDs[axis]
     }
-    let detectionViewRunner: DetectionViewRunner
     @ObservedObject var motionEventViewModel: MotionEventViewModel
     @ObservedObject var detectorsViewModel: DetectorsViewModel
     @EnvironmentObject var appRunnerViewModel: AppRunnerViewModel
     @State private var shouldExpand: Bool
     @State private var animationValue: Int
     @State var cancellables = Set<AnyCancellable>()
+    let motionEventViewRunner: MotionEventViewRunner
 
     init(
         hapticGenerator: HapticGeneratorProtocol?,
@@ -45,9 +45,8 @@ struct DoubleShakeDetectionView: View
         _shouldExpand = State(initialValue: true)
         _animationValue = State(initialValue: 0)
         self.detectorsViewModel = detectorsViewModel
-        self.detectionViewRunner = DetectionViewRunner(
-            motionEventViewModel: motionEventViewModel
-        )
+        self.motionEventViewRunner =
+            MotionEventViewRunner(runnableViewModel: motionEventViewModel)
     }
 
     var body: some View
@@ -133,22 +132,22 @@ struct DoubleShakeDetectionView: View
         }
             .onChange(of: appRunnerViewModel.shouldRunDetectionView)
         { shouldRun in
-            print("should run det \(shouldRun)")
-            if shouldRun {
-                detectionViewRunner.runDetectionView()
+            if shouldRun
+            {
+                motionEventViewRunner.runTimer()
             } else
             {
-                detectionViewRunner.cancelAll()
+                motionEventViewRunner.cancelAll()
             }
         }
             .onAppear()
         {
             if appRunnerViewModel.shouldRunDetectionView
             {
-                detectionViewRunner.runDetectionView()
+                motionEventViewRunner.runTimer()
             } else
             {
-                detectionViewRunner.cancelAll()
+                motionEventViewRunner.cancelAll()
             }
         }
             .task

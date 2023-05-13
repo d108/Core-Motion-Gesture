@@ -30,21 +30,22 @@ struct ContentView: View
         MotionEventViewModel(motionDetector: detector)
     }
     let hapticGenerator: HapticGeneratorProtocol?
-    var tabRunner: TabViewRunner
-    let userSettingStorage: UserSettingStorageProtocol
+    var tabViewTimeChanger: TabViewRunner
+    let userSettingViewModel: UserSettingViewModel
 
     init(
         hapticGenerator: HapticGeneratorProtocol? = nil,
         tabSelectionViewModel: TabSelectionViewModel,
         appRunnerViewModel: AppRunnerViewModel,
-        userSettingStorage: UserSettingStorageProtocol
+        userSettingViewModel: UserSettingViewModel
     )
     {
         self.hapticGenerator = hapticGenerator
         self.tabSelectionViewModel = tabSelectionViewModel
-        self.tabRunner = TabViewRunner(tabSelectionViewModel: tabSelectionViewModel)
+        self.tabViewTimeChanger =
+            TabViewRunner(runnableViewModel: tabSelectionViewModel)
         self.appRunnerViewModel = appRunnerViewModel
-        self.userSettingStorage = userSettingStorage
+        self.userSettingViewModel = userSettingViewModel
     }
 
     // View factory
@@ -104,8 +105,8 @@ struct ContentView: View
                     )
                     {
                         UserSettingView(
-                            monitorAxis: tabSelectionViewModel.selectedTab,
-                            userSettingStorage: userSettingStorage
+                            userSettingViewModel: userSettingViewModel,
+                            monitorAxis: tabSelectionViewModel.selectedTab
                         )
                             .environmentObject(appRunnerViewModel)
                             .environmentObject(detectorsViewModel)
@@ -119,21 +120,29 @@ struct ContentView: View
         }
             .onChange(of: appRunnerViewModel.shouldRunTabView)
         { shouldRun in
-            if shouldRun { tabRunner.switchTabs() }
-            else { tabRunner.cancelAll() }
+            if shouldRun
+            {
+                tabViewTimeChanger.runTimer()
+            } else
+            {
+                tabViewTimeChanger.cancelAll()
+            }
         }
             .onAppear
         {
-            print("should open setting \(appRunnerViewModel.shouldOpenSettingsOnStart)")
-            if appRunnerViewModel.shouldOpenSettingsOnStart,
-                !appRunnerViewModel.settingsShownOnStart
+            if userSettingViewModel.shouldOpenSettingsOnStart,
+                !userSettingViewModel.settingsShownOnStart
             {
                 showingSettingsSheet = true
-                appRunnerViewModel.settingsShownOnStart = true
+                userSettingViewModel.settingsShownOnStart = true
             }
             if appRunnerViewModel.shouldRunTabView
-            { tabRunner.switchTabs() }
-            else { tabRunner.cancelAll() }
+            {
+                tabViewTimeChanger.runTimer()
+            } else
+            {
+                tabViewTimeChanger.cancelAll()
+            }
         }
     }
 }
@@ -144,12 +153,13 @@ struct ContentView_Previews: PreviewProvider
     {
         let tabSelectionViewModel = TabSelectionViewModel(defaults: MockUserDefaults())
         let userSettingStorage = MockUserSettingStorage(defaults: MockUserDefaults())
-        let appRunnerViewModel = AppRunnerViewModel(userSettingStorage: userSettingStorage)
+        let appRunnerViewModel = AppRunnerViewModel()
+        let userSettingViewModel = UserSettingViewModel(userSettingStorage: userSettingStorage)
 
         ContentView(
             tabSelectionViewModel: tabSelectionViewModel,
             appRunnerViewModel: appRunnerViewModel,
-            userSettingStorage: userSettingStorage
+            userSettingViewModel: userSettingViewModel
         )
     }
 }

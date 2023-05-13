@@ -4,7 +4,7 @@ protocol UserSettingStorageProtocol
 {
     var defaults: UserDefaults { get }
 
-    func storeShouldOpenSettingsOnStart(openSettingsOnStart: Bool)
+    func storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart: Bool)
     func loadShouldOpenSettingsOnStart() throws -> Bool
     func storeShouldDebugLayout(shouldDebugLayout: Bool)
     func loadShouldDebugLayout() throws -> Bool
@@ -19,10 +19,10 @@ struct UserSettingStorage: UserSettingStorageProtocol
         self.defaults = defaults
     }
 
-    func storeShouldOpenSettingsOnStart(openSettingsOnStart: Bool)
+    func storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart: Bool)
     {
         defaults.setCodable(
-            value: openSettingsOnStart,
+            value: shouldOpenSettingsOnStart,
             forKey: UserSetting.shouldOpenSettingsOnStart.key
         )
     }

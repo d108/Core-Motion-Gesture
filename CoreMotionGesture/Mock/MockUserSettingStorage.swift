@@ -4,7 +4,7 @@ struct MockUserSettingStorage: UserSettingStorageProtocol
 {
     var defaults: UserDefaults
 
-    func storeShouldOpenSettingsOnStart(openSettingsOnStart: Bool)
+    func storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart: Bool)
     {
         // dummy implementation
     }

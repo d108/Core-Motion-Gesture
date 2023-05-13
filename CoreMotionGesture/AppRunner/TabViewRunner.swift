@@ -1,17 +1,23 @@
 import Foundation
 import Combine
 
-class TabViewRunner: AppRunnerProtocol
+protocol TimeChangerProtocol: AppRunnerProtocol
 {
-    var cancellables = Set<AnyCancellable>()
-    let tabSelectionViewModel: TabSelectionViewModel
-    let delay: TimeInterval = 2
+    associatedtype EventType
+}
 
-    init(
-        tabSelectionViewModel: TabSelectionViewModel
-    )
+final class TabViewRunner: TimeChangerProtocol
+{
+    typealias EventType = MonitorAxisTab
+
+    var cancellables = Set<AnyCancellable>()
+    var runnableViewModel: TabViewRunnable
+    var subject = PassthroughSubject<EventType, Never>()
+    let delay: TimeInterval = 3
+
+    init(runnableViewModel: TabViewRunnable)
     {
-        self.tabSelectionViewModel = tabSelectionViewModel
+        self.runnableViewModel = runnableViewModel
     }
 
     func cancelAll()
@@ -19,32 +25,25 @@ class TabViewRunner: AppRunnerProtocol
         cancellables = Set<AnyCancellable>()
     }
 
-    func switchTabs()
+    func runTimer()
     {
-        let tabSwitcher = PassthroughSubject<MonitorAxisTab, Never>()
-        tabSwitcher
+        subject
             .sink(receiveValue:
             { tab in
-                print("◻️tab \(tab)")
-                self.tabSelectionViewModel.selectedTab = tab
+                self.runnableViewModel.onTimeChange(tab: tab)
             })
             .store(in: &cancellables)
+
         var tabs = MonitorAxisTab.allCases
         let timer = Timer.publish(every: delay, on: .main, in: .common)
             .autoconnect()
         timer.sink
         { _ in
-            if tabs.count > 0
-            {
-                tabSwitcher.send(tabs.remove(at: 0))
-            } else
+            if tabs.count <= 0
             {
                 tabs = MonitorAxisTab.allCases
-                // We don't finish here with the following code:
-                //     tabSwitcher.send(completion: .finished)
-                // It is an intentional decision matching our app's design state.
             }
-        }
-            .store(in: &cancellables)
+            self.subject.send(tabs.remove(at: 0))
+        }.store(in: &cancellables)
     }
 }

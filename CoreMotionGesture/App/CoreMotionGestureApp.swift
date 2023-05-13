@@ -22,6 +22,7 @@ struct CoreMotionGestureApp: App
     let userSettingStorage: UserSettingStorageProtocol
     let tabSelectionViewModel: TabSelectionViewModel
     let appRunnerViewModel: AppRunnerViewModel
+    let userSettingViewModel: UserSettingViewModel
 
     init()
     {
@@ -39,7 +40,8 @@ struct CoreMotionGestureApp: App
         }
         self.userSettingStorage = UserSettingStorage(defaults: defaults)
         self.tabSelectionViewModel = TabSelectionViewModel(defaults: defaults)
-        self.appRunnerViewModel = AppRunnerViewModel(userSettingStorage: userSettingStorage)
+        self.appRunnerViewModel = AppRunnerViewModel()
+        self.userSettingViewModel = UserSettingViewModel(userSettingStorage: userSettingStorage)
     }
 
     var body: some Scene
@@ -50,7 +52,7 @@ struct CoreMotionGestureApp: App
                 hapticGenerator: hapticGenerator,
                 tabSelectionViewModel: tabSelectionViewModel,
                 appRunnerViewModel: appRunnerViewModel,
-                userSettingStorage: userSettingStorage
+                userSettingViewModel: userSettingViewModel
             )
         }
     }
