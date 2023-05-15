@@ -51,9 +51,8 @@ struct CoreMotionGestureApp: App
             ContentView(
                 hapticGenerator: hapticGenerator,
                 tabSelectionViewModel: tabSelectionViewModel,
-                appRunnerViewModel: appRunnerViewModel,
                 userSettingViewModel: userSettingViewModel
-            )
+            ).environmentObject(appRunnerViewModel)
         }
     }
 }

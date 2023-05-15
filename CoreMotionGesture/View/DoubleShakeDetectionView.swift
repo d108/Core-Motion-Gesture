@@ -31,7 +31,7 @@ struct DoubleShakeDetectionView: View
     @State private var shouldExpand: Bool
     @State private var animationValue: Int
     @State var cancellables = Set<AnyCancellable>()
-    let motionEventViewRunner: MotionEventViewRunner
+    let motionEventViewRunner: any TimeChangerProtocol
 
     init(
         hapticGenerator: HapticGeneratorProtocol?,
@@ -132,23 +132,13 @@ struct DoubleShakeDetectionView: View
         }
             .onChange(of: appRunnerViewModel.shouldRunDetectionView)
         { shouldRun in
-            if shouldRun
-            {
-                motionEventViewRunner.runTimer()
-            } else
-            {
-                motionEventViewRunner.cancelAll()
-            }
+            motionEventViewRunner.appRunnerShouldRun(shouldRun: shouldRun)
         }
             .onAppear()
         {
-            if appRunnerViewModel.shouldRunDetectionView
-            {
-                motionEventViewRunner.runTimer()
-            } else
-            {
-                motionEventViewRunner.cancelAll()
-            }
+            motionEventViewRunner.appRunnerShouldRun(
+                shouldRun: appRunnerViewModel.shouldRunDetectionView
+            )
         }
             .task
         {

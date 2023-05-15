@@ -7,5 +7,4 @@ enum UserSetting: String
 
     case shouldOpenSettingsOnStart
     case shouldDebugLayout
-    // TODO: Have view model for user settings
 }

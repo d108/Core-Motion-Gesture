@@ -1,11 +1,6 @@
 import Foundation
 import Combine
 
-protocol TimeChangerProtocol: AppRunnerProtocol
-{
-    associatedtype EventType
-}
-
 final class TabViewRunner: TimeChangerProtocol
 {
     typealias EventType = MonitorAxisTab

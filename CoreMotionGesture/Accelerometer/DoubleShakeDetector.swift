@@ -152,8 +152,7 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
                         {
                             sendMotionEvent()
                             outsideWindowCount = 0
-                        }
-                        else
+                        } else
                         {
                             shouldIncrementShakeCount = true
                             outsideWindowCount += 1

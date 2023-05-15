@@ -36,7 +36,7 @@ final class MotionEventViewModel:
     }
     let motionDetector: DoubleShakeDetectorProtocol
     let fatalErrorText = "Missing Publisher: Should Not Happen"
-    var cancellables = [AnyCancellable]()
+    var cancellables = Set<AnyCancellable>()
 
     init(motionDetector: DoubleShakeDetectorProtocol)
     {

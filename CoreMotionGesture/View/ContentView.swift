@@ -7,7 +7,7 @@ struct ContentView: View
     @ObservedObject var detectorsViewModel: DetectorsViewModel =
         DetectorsViewModel()
     @ObservedObject var tabSelectionViewModel: TabSelectionViewModel
-    @ObservedObject var appRunnerViewModel: AppRunnerViewModel
+    @EnvironmentObject var appRunnerViewModel: AppRunnerViewModel
     @State var cancellables = Set<AnyCancellable>()
     @State private var showingSettingsSheet = false
 
@@ -30,13 +30,12 @@ struct ContentView: View
         MotionEventViewModel(motionDetector: detector)
     }
     let hapticGenerator: HapticGeneratorProtocol?
-    var tabViewTimeChanger: TabViewRunner
+    var tabViewTimeChanger: any TimeChangerProtocol
     let userSettingViewModel: UserSettingViewModel
 
     init(
         hapticGenerator: HapticGeneratorProtocol? = nil,
         tabSelectionViewModel: TabSelectionViewModel,
-        appRunnerViewModel: AppRunnerViewModel,
         userSettingViewModel: UserSettingViewModel
     )
     {
@@ -44,7 +43,6 @@ struct ContentView: View
         self.tabSelectionViewModel = tabSelectionViewModel
         self.tabViewTimeChanger =
             TabViewRunner(runnableViewModel: tabSelectionViewModel)
-        self.appRunnerViewModel = appRunnerViewModel
         self.userSettingViewModel = userSettingViewModel
     }
 
@@ -120,13 +118,7 @@ struct ContentView: View
         }
             .onChange(of: appRunnerViewModel.shouldRunTabView)
         { shouldRun in
-            if shouldRun
-            {
-                tabViewTimeChanger.runTimer()
-            } else
-            {
-                tabViewTimeChanger.cancelAll()
-            }
+            tabViewTimeChanger.appRunnerShouldRun(shouldRun: shouldRun)
         }
             .onAppear
         {
@@ -136,13 +128,7 @@ struct ContentView: View
                 showingSettingsSheet = true
                 userSettingViewModel.settingsShownOnStart = true
             }
-            if appRunnerViewModel.shouldRunTabView
-            {
-                tabViewTimeChanger.runTimer()
-            } else
-            {
-                tabViewTimeChanger.cancelAll()
-            }
+            tabViewTimeChanger.appRunnerShouldRun(shouldRun: appRunnerViewModel.shouldRunTabView)
         }
     }
 }
@@ -158,8 +144,7 @@ struct ContentView_Previews: PreviewProvider
 
         ContentView(
             tabSelectionViewModel: tabSelectionViewModel,
-            appRunnerViewModel: appRunnerViewModel,
             userSettingViewModel: userSettingViewModel
-        )
+        ).environmentObject(appRunnerViewModel)
     }
 }
