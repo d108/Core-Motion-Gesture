@@ -242,23 +242,20 @@
 		65EA24FC29F19D7400760C4C /* CoreMotionGesture */ = {
 			isa = PBXGroup;
 			children = (
-				65D6EA022A0F027B00EC63B7 /* Info.plist */,
-				65587D5A2A0ED7D60086D1F4 /* AppRunner */,
-				657E7F4C2A0AEE0A0072C11E /* Animation */,
-				655AFA5F2A09856C005B9BC9 /* Persistence */,
-				653CBBD42A05BB6000F590C1 /* Setting */,
-				6545589629F232C000B5B0F1 /* Model */,
-				65DB943429F1E3A700F22EB8 /* ViewModel */,
-				6509A2842A04924A00D7FA36 /* ErrorHandling */,
 				65EA252729F19D7F00760C4C /* Accelerometer */,
-				65EA252A29F1A2D800760C4C /* View */,
+				657E7F4C2A0AEE0A0072C11E /* Animation */,
 				65EA252B29F1A2E500760C4C /* App */,
-				651E6F2529FF03A200C43B7C /* Haptic */,
+				65587D5A2A0ED7D60086D1F4 /* AppRunner */,
+				6509A2842A04924A00D7FA36 /* ErrorHandling */,
 				65EA252C29F1A47A00760C4C /* Extension */,
+				651E6F2529FF03A200C43B7C /* Haptic */,
 				65EA252F29F1A55B00760C4C /* Mock */,
-				6575918A2A09CDCA001F07E6 /* CoreMotionGesture.entitlements */,
-				65EA250129F19D7500760C4C /* Assets.xcassets */,
+				6545589629F232C000B5B0F1 /* Model */,
+				655AFA5F2A09856C005B9BC9 /* Persistence */,
 				65EA250329F19D7500760C4C /* Preview Content */,
+				653CBBD42A05BB6000F590C1 /* Setting */,
+				65EA252A29F1A2D800760C4C /* View */,
+				65DB943429F1E3A700F22EB8 /* ViewModel */,
 			);
 			path = CoreMotionGesture;
 			sourceTree = "<group>";
@@ -305,7 +302,10 @@
 		65EA252B29F1A2E500760C4C /* App */ = {
 			isa = PBXGroup;
 			children = (
+				65EA250129F19D7500760C4C /* Assets.xcassets */,
+				6575918A2A09CDCA001F07E6 /* CoreMotionGesture.entitlements */,
 				65EA24FD29F19D7400760C4C /* CoreMotionGestureApp.swift */,
+				65D6EA022A0F027B00EC63B7 /* Info.plist */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -620,14 +620,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CoreMotionGesture/CoreMotionGesture.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CoreMotionGesture/App/CoreMotionGesture.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CoreMotionGesture/Preview Content\"";
 				DEVELOPMENT_TEAM = H8GGCD3NY7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CoreMotionGesture/Info.plist;
+				INFOPLIST_FILE = CoreMotionGesture/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -650,14 +650,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CoreMotionGesture/CoreMotionGesture.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CoreMotionGesture/App/CoreMotionGesture.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CoreMotionGesture/Preview Content\"";
 				DEVELOPMENT_TEAM = H8GGCD3NY7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CoreMotionGesture/Info.plist;
+				INFOPLIST_FILE = CoreMotionGesture/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
