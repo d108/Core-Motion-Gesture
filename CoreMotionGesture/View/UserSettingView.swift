@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
+// SPDX-License-Identifier: MIT License
+
 import SwiftUI
 
 struct UserSettingView: View
@@ -39,7 +42,6 @@ struct UserSettingView: View
             Spacer().layoutPriority(1)
         }.onChange(of: userSettingViewModel.shouldOpenSettingsOnStart)
         { openSettingsOnStart in
-            print("will store \(openSettingsOnStart)")
             userSettingViewModel.storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart: openSettingsOnStart)
         }
     }

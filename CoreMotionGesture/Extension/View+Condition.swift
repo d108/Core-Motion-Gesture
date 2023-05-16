@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
+// SPDX-License-Identifier: MIT License
+
 import SwiftUI
 
 // From https://www.avanderlee.com/swiftui/conditional-view-modifier/
