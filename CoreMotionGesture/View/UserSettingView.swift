@@ -60,6 +60,6 @@ struct UserSettingView_Previews: PreviewProvider
             userSettingViewModel: userSettingViewModel,
             monitorAxis: mockAxis
         )
-            .environmentObject(appRunnerViewModel)
+        .environmentObject(appRunnerViewModel)
     }
 }

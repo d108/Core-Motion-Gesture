@@ -45,7 +45,8 @@ struct AxisView: View
                 .foregroundColor(circleColor)
                 .overlay(Circle()
                     .stroke(circleColor, lineWidth: circleLinewidth)
-                    .frame(width: circleWidth))
+                    .frame(width: circleWidth)
+                )
         }.if(Setting.shouldDebugLayout) { $0.border(.purple) }
     }
 }

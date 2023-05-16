@@ -33,7 +33,8 @@ extension DoubleShakeDetector
     func sendMotionError(
         error: MotionError,
         description: String = ""
-    ) {
+    )
+    {
         stopMonitoring()
         motionEventStream?.sendMotionError(error: error)
     }

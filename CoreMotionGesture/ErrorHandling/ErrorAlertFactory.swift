@@ -21,7 +21,8 @@ struct ErrorAlertFactory
     init(
         motionEventViewModel: MotionEventViewModelErrorAlertProtocol,
         detectorsViewModel: DetectorsViewModel
-    ) {
+    )
+    {
         self.motionEventViewModel = motionEventViewModel
         self.detectorsViewModel = detectorsViewModel
     }

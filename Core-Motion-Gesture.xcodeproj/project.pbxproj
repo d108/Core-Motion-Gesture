@@ -53,7 +53,6 @@
 		65EA250229F19D7500760C4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EA250129F19D7500760C4C /* Assets.xcassets */; };
 		65EA250529F19D7500760C4C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65EA250429F19D7500760C4C /* Preview Assets.xcassets */; };
 		65EA250F29F19D7500760C4C /* CoreMotionGestureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EA250E29F19D7500760C4C /* CoreMotionGestureTests.swift */; };
-		65EA252E29F1A48900760C4C /* View+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EA252D29F1A48900760C4C /* View+Task.swift */; };
 		65EA253129F1A59800760C4C /* MockMotionDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EA253029F1A59800760C4C /* MockMotionDetector.swift */; };
 		65EA253329F1A6E700760C4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 65EA253229F1A6E700760C4C /* README.md */; };
 /* End PBXBuildFile section */
@@ -119,7 +118,6 @@
 		65EA250429F19D7500760C4C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		65EA250A29F19D7500760C4C /* UnitTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65EA250E29F19D7500760C4C /* CoreMotionGestureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionGestureTests.swift; sourceTree = "<group>"; };
-		65EA252D29F1A48900760C4C /* View+Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Task.swift"; sourceTree = "<group>"; };
 		65EA253029F1A59800760C4C /* MockMotionDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMotionDetector.swift; sourceTree = "<group>"; };
 		65EA253229F1A6E700760C4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -319,7 +317,6 @@
 				655AFA602A09866B005B9BC9 /* UserDefaults+Codable.swift */,
 				657591882A09CD16001F07E6 /* UserDefaults+Group.swift */,
 				653CBBD22A05BAE900F590C1 /* View+Condition.swift */,
-				65EA252D29F1A48900760C4C /* View+Task.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -445,7 +442,6 @@
 				659AE2582A0F2CD800472757 /* AppRunnerProtocol.swift in Sources */,
 				655AFA632A098780005B9BC9 /* User+Tab.swift in Sources */,
 				65587D5C2A0EDBD40086D1F4 /* UserSettingView.swift in Sources */,
-				65EA252E29F1A48900760C4C /* View+Task.swift in Sources */,
 				65EA253129F1A59800760C4C /* MockMotionDetector.swift in Sources */,
 				657591892A09CD16001F07E6 /* UserDefaults+Group.swift in Sources */,
 				655AFA6F2A09B438005B9BC9 /* DoubleShakeDetector+EventHandling.swift in Sources */,

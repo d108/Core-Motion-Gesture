@@ -62,7 +62,7 @@ struct ContentView: View
             ),
             detectorsViewModel: detectorsViewModel
         )
-            .environmentObject(appRunnerViewModel)
+        .environmentObject(appRunnerViewModel)
     }
 
     var body: some View
@@ -77,10 +77,10 @@ struct ContentView: View
                         monitorAxis: axis,
                         motionEventStream: MotionEventStream()
                     )
-                        .tabItem
+                    .tabItem
                     { tabLabel(axis) }
-                        .tag(axis)
-                        .id(detectorsViewModel.detectionViewIDs[axis])
+                    .tag(axis)
+                    .id(detectorsViewModel.detectionViewIDs[axis])
                 }
             }.navigationBarTitle(
                 Text("Core Motion Gesture Demo"),
@@ -109,31 +109,31 @@ struct ContentView: View
                             userSettingViewModel: userSettingViewModel,
                             monitorAxis: tabSelectionViewModel.selectedTab
                         )
-                            .environmentObject(appRunnerViewModel)
-                            .environmentObject(detectorsViewModel)
+                        .environmentObject(appRunnerViewModel)
+                        .environmentObject(detectorsViewModel)
                     }
                 }
             }
         }
             .onChange(of: tabSelectionViewModel.selectedTab)
-        { selectedTab in
-            detectorsViewModel.resetDetectorViewID(axis: selectedTab)
-        }
-            .onChange(of: appRunnerViewModel.shouldRunTabView)
-        { shouldRun in
-            tabViewTimeChanger.appRunnerShouldRun(shouldRun: shouldRun)
-        }
-            .onAppear
-        {
-            if userSettingViewModel.shouldOpenSettingsOnStart,
-                !userSettingViewModel.settingsShownOnStart
-            {
-                showingSettingsSheet = true
-                userSettingViewModel.settingsShownOnStart = true
+            { selectedTab in
+                detectorsViewModel.resetDetectorViewID(axis: selectedTab)
             }
-            tabViewTimeChanger.appRunnerShouldRun(shouldRun: appRunnerViewModel.shouldRunTabView)
+            .onChange(of: appRunnerViewModel.shouldRunTabView)
+            { shouldRun in
+                tabViewTimeChanger.appRunnerShouldRun(shouldRun: shouldRun)
+            }
+            .onAppear
+            {
+                if userSettingViewModel.shouldOpenSettingsOnStart,
+                    !userSettingViewModel.settingsShownOnStart
+                {
+                    showingSettingsSheet = true
+                    userSettingViewModel.settingsShownOnStart = true
+                }
+                tabViewTimeChanger.appRunnerShouldRun(shouldRun: appRunnerViewModel.shouldRunTabView)
+            }
         }
-    }
 }
 
 struct ContentView_Previews: PreviewProvider

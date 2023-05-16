@@ -70,7 +70,8 @@ struct DoubleShakeDetectionView: View
             {
                 motionEventViewModel.motionDetector
                     .motionEventStream?.sendMotionError(error: .testError)
-            } label: {
+            } label:
+            {
                 Text(testErrorText)
             }
             Spacer()
@@ -78,13 +79,13 @@ struct DoubleShakeDetectionView: View
             AxisView(
                 motionEventViewModel: motionEventViewModel
             )
-                .id(detectorsViewModel.axisViewIDs[axis])
-                .scaleEffect(shouldExpand &&
-                    !newViewWasForError(detectorsViewModel, axis)
-                    ? axisScaleStart : axisScaleEnd
+            .id(detectorsViewModel.axisViewIDs[axis])
+            .scaleEffect(shouldExpand &&
+                !newViewWasForError(detectorsViewModel, axis)
+                ? axisScaleStart : axisScaleEnd
             )
-                .animation(AnimationFactory.lessBounce(), value: animationValue)
-                .onAppear
+            .animation(AnimationFactory.lessBounce(), value: animationValue)
+            .onAppear
             {
                 shouldExpand = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + axisExpandAfter)
@@ -108,7 +109,8 @@ struct DoubleShakeDetectionView: View
                     case .started: motionEventViewModel.monitoringButtonState = .notStarted
                     case .notStarted: motionEventViewModel.monitoringButtonState = .started
                     }
-                } label: {
+                } label:
+                {
                     switch motionEventViewModel.monitoringButtonState
                     {
                     case .started: buttonLabel(motionEventViewModel.monitoringButtonState)
@@ -117,39 +119,33 @@ struct DoubleShakeDetectionView: View
                 }
                 Spacer().frame(maxHeight: Setting.higButtonHeight)
             }.if(Setting.shouldDebugLayout) { $0.border(.pink) }
-                .buttonStyle(RoundedButton(
+            .buttonStyle(RoundedButton(
                 isActivated: motionEventViewModel.monitoringButtonState == .started)
             )
         }.if(Setting.shouldDebugLayout) { $0.border(.green) }
-            .padding(.vertical)
-            .onChange(of: motionEventViewModel.monitoringButtonState)
+        .padding(.vertical)
+        .onChange(of: motionEventViewModel.monitoringButtonState)
         { buttonState in
             motionEventViewModel.handleMonitoring(buttonState: buttonState)
         }
-            .onChange(of: motionEventViewModel.doubleShaked)
+        .onChange(of: motionEventViewModel.doubleShaked)
         { doubleShaked in
             if doubleShaked
             {
                 hapticGenerator?.generateFeedback()
             }
         }
-            .onChange(of: appRunnerViewModel.shouldRunDetectionView)
+        .onChange(of: appRunnerViewModel.shouldRunDetectionView)
         { shouldRun in
             motionEventViewRunner.appRunnerShouldRun(shouldRun: shouldRun)
         }
-            .onAppear()
+        .onAppear()
         {
             motionEventViewRunner.appRunnerShouldRun(
                 shouldRun: appRunnerViewModel.shouldRunDetectionView
             )
         }
-            .task
-        {
-            await motionEventViewModel.handleMonitoring(
-                buttonState: motionEventViewModel.monitoringButtonState
-            )
-        }
-            .onDisappear()
+        .onDisappear()
         {
             motionEventViewModel.monitoringButtonState = .notStarted
         }

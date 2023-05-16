@@ -50,7 +50,8 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
         motionManager: CMMotionManager,
         monitorAxis: MonitorAxis,
         motionEventStream: MotionEventStreamProtocol
-    ) {
+    )
+    {
         self.motionManager = motionManager
         motionManager.accelerometerUpdateInterval = accelerometerUpdateInterval
         self.motionEventStream = MotionEventStream()

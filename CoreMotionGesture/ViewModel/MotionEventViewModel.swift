@@ -76,7 +76,9 @@ final class MotionEventViewModel:
                         Setting.unknownErrorText)
                     self.appendMotionError(motionError: motionError)
                 }
-            }, receiveValue: { motionEvent in
+            },
+            receiveValue:
+            { motionEvent in
                 self.doubleShaked = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + Setting.waveImageDelay)
                 {
