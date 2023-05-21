@@ -24,29 +24,39 @@ struct AxisView: View
         self.axis = motionEventViewModel.motionDetector.monitorAxis
     }
 
+    var wave: some View
+    {
+        // Wave view
+        Group
+        {
+            Image(systemName: MonitoringSystemImage.doubleShaked.rawValue)
+                .resizable(resizingMode: .stretch)
+                .scaleEffect(motionEventViewModel.doubleShaked
+                    ? CGSize(width: 1.0, height: waveHeightStart):
+                    CGSize(width: 1.0, height: waveHeightEnd)
+                )
+                .animation(AnimationFactory.moreBounce().delay(0.2).repeatForever())
+        }.opacity(motionEventViewModel.doubleShaked ? visible : invisible)
+    }
+
+    var axisLabel: some View
+    {
+        // Axis label view
+        Text(motionEventViewModel.motionDetector.monitorAxis.asText())
+            .font(.system(size: axisFontSize))
+            .foregroundColor(circleColor)
+            .overlay(Circle()
+                .stroke(circleColor, lineWidth: circleLinewidth)
+                .frame(width: circleWidth)
+            )
+    }
+
     var body: some View
     {
-        return ZStack
+        ZStack
         {
-            // Wave view
-            Group
-            {
-                Image(systemName: MonitoringSystemImage.doubleShaked.rawValue)
-                    .resizable(resizingMode: .stretch)
-                    .scaleEffect(motionEventViewModel.doubleShaked
-                        ? CGSize(width: 1.0, height: waveHeightStart):
-                        CGSize(width: 1.0, height: waveHeightEnd)
-                    )
-                    .animation(AnimationFactory.moreBounce().delay(0.2).repeatForever())
-            }.opacity(motionEventViewModel.doubleShaked ? visible : invisible)
-            // Axis label view
-            Text(motionEventViewModel.motionDetector.monitorAxis.asText())
-                .font(.system(size: axisFontSize))
-                .foregroundColor(circleColor)
-                .overlay(Circle()
-                    .stroke(circleColor, lineWidth: circleLinewidth)
-                    .frame(width: circleWidth)
-                )
+            wave
+            axisLabel
         }.if(Setting.shouldDebugLayout) { $0.border(.purple) }
     }
 }

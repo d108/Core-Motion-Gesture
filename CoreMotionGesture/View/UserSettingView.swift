@@ -42,7 +42,8 @@ struct UserSettingView: View
             Spacer().layoutPriority(1)
         }.onChange(of: userSettingViewModel.shouldOpenSettingsOnStart)
         { openSettingsOnStart in
-            userSettingViewModel.storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart: openSettingsOnStart)
+            userSettingViewModel
+                .storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart: openSettingsOnStart)
         }
     }
 }

@@ -52,6 +52,61 @@ struct DoubleShakeDetectionView: View
             MotionEventViewRunner(runnableViewModel: motionEventViewModel)
     }
 
+    var descriptiveText: some View
+    {
+        Text("Testing Accelerometer\nfor Double Shake Motion")
+            .multilineTextAlignment(.center)
+            .font(.title2)
+    }
+
+    var secondaryDescriptiveText: some View
+    {
+        Text("The motion can be used as a non-screen-based gesture in apps.")
+            .font(.caption)
+            .padding(padding)
+    }
+
+    var testErrorButton: some View
+    {
+        // Test error button
+        Button
+        {
+            motionEventViewModel.motionDetector
+                .motionEventStream?.sendMotionError(error: .testError)
+        } label:
+        {
+            Text(testErrorText)
+        }
+    }
+
+    var monitoringButton: some View
+    {
+        // Monitoring button
+        VStack
+        {
+            Spacer().frame(maxHeight: Setting.higButtonHeight)
+            Button
+            {
+                switch motionEventViewModel.monitoringButtonState
+                {
+                case .started: motionEventViewModel.monitoringButtonState = .notStarted
+                case .notStarted: motionEventViewModel.monitoringButtonState = .started
+                }
+            } label:
+            {
+                switch motionEventViewModel.monitoringButtonState
+                {
+                case .started: buttonLabel(motionEventViewModel.monitoringButtonState)
+                case .notStarted: buttonLabel(motionEventViewModel.monitoringButtonState)
+                }
+            }
+            Spacer().frame(maxHeight: Setting.higButtonHeight)
+        }.if(Setting.shouldDebugLayout) { $0.border(.pink) }
+        .buttonStyle(RoundedButton(
+            isActivated: motionEventViewModel.monitoringButtonState == .started)
+        )
+    }
+
     var body: some View
     {
         print("button state is \(motionEventViewModel.monitoringButtonState)",
@@ -59,21 +114,9 @@ struct DoubleShakeDetectionView: View
         return VStack(spacing: Setting.vspace)
         {
             Spacer()
-            Text("Testing Accelerometer\nfor Double Shake Motion")
-                .multilineTextAlignment(.center)
-                .font(.title2)
-            Text("The motion can be used as a non-screen-based gesture in apps.")
-                .font(.caption)
-                .padding(padding)
-            // Test error button
-            Button
-            {
-                motionEventViewModel.motionDetector
-                    .motionEventStream?.sendMotionError(error: .testError)
-            } label:
-            {
-                Text(testErrorText)
-            }
+            descriptiveText
+            secondaryDescriptiveText
+            testErrorButton
             Spacer()
             // Axis view
             AxisView(
@@ -98,30 +141,7 @@ struct DoubleShakeDetectionView: View
                     }
                 }
             }
-            // Monitoring button
-            VStack
-            {
-                Spacer().frame(maxHeight: Setting.higButtonHeight)
-                Button
-                {
-                    switch motionEventViewModel.monitoringButtonState
-                    {
-                    case .started: motionEventViewModel.monitoringButtonState = .notStarted
-                    case .notStarted: motionEventViewModel.monitoringButtonState = .started
-                    }
-                } label:
-                {
-                    switch motionEventViewModel.monitoringButtonState
-                    {
-                    case .started: buttonLabel(motionEventViewModel.monitoringButtonState)
-                    case .notStarted: buttonLabel(motionEventViewModel.monitoringButtonState)
-                    }
-                }
-                Spacer().frame(maxHeight: Setting.higButtonHeight)
-            }.if(Setting.shouldDebugLayout) { $0.border(.pink) }
-            .buttonStyle(RoundedButton(
-                isActivated: motionEventViewModel.monitoringButtonState == .started)
-            )
+            monitoringButton
         }.if(Setting.shouldDebugLayout) { $0.border(.green) }
         .padding(.vertical)
         .onChange(of: motionEventViewModel.monitoringButtonState)
@@ -149,7 +169,7 @@ struct DoubleShakeDetectionView: View
         {
             motionEventViewModel.monitoringButtonState = .notStarted
         }
-            .alert(isPresented: $motionEventViewModel.showErrorAlert)
+        .alert(isPresented: $motionEventViewModel.showErrorAlert)
         {
             let factory = errorAlertFactory(motionEventViewModel, detectorsViewModel)
             return factory.errorAlert(

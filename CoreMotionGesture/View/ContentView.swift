@@ -92,10 +92,11 @@ struct ContentView: View
                     Button
                     {
                         showingSettingsSheet.toggle()
-                    } label: {
+                    } label:
+                    {
                         Image(systemName: "info.circle")
                     }
-                        .sheet(
+                    .sheet(
                         isPresented: $showingSettingsSheet,
                         onDismiss:
                         {
@@ -115,25 +116,25 @@ struct ContentView: View
                 }
             }
         }
-            .onChange(of: tabSelectionViewModel.selectedTab)
-            { selectedTab in
-                detectorsViewModel.resetDetectorViewID(axis: selectedTab)
-            }
-            .onChange(of: appRunnerViewModel.shouldRunTabView)
-            { shouldRun in
-                tabViewTimeChanger.appRunnerShouldRun(shouldRun: shouldRun)
-            }
-            .onAppear
-            {
-                if userSettingViewModel.shouldOpenSettingsOnStart,
-                    !userSettingViewModel.settingsShownOnStart
-                {
-                    showingSettingsSheet = true
-                    userSettingViewModel.settingsShownOnStart = true
-                }
-                tabViewTimeChanger.appRunnerShouldRun(shouldRun: appRunnerViewModel.shouldRunTabView)
-            }
+        .onChange(of: tabSelectionViewModel.selectedTab)
+        { selectedTab in
+            detectorsViewModel.resetDetectorViewID(axis: selectedTab)
         }
+        .onChange(of: appRunnerViewModel.shouldRunTabView)
+        { shouldRun in
+            tabViewTimeChanger.appRunnerShouldRun(shouldRun: shouldRun)
+        }
+        .onAppear
+        {
+            if userSettingViewModel.shouldOpenSettingsOnStart,
+                    !userSettingViewModel.settingsShownOnStart
+            {
+                showingSettingsSheet = true
+                userSettingViewModel.settingsShownOnStart = true
+            }
+            tabViewTimeChanger.appRunnerShouldRun(shouldRun: appRunnerViewModel.shouldRunTabView)
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider
