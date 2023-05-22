@@ -1,5 +1,7 @@
-// SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
-// SPDX-License-Identifier: MIT License
+/* 
+ * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
+ * SPDX-License-Identifier: MIT License
+ */
 
 import SwiftUI
 import Combine
@@ -13,24 +15,24 @@ protocol DoubleShakeDetectorProtocol
     func stopMonitoring()
 }
 
-// Detect a double shake gesture.
-//
-// Only a limited number, keepValueCount, of readings are kept to prevent using more
-// memory. The motionCutoff is the strength of the detected motion according to the
-// standard deviation of readings.
-//
-// We have two distinct detection states during our shake monitoring process:
-//
-// A. The detection process from the beginning of monitoring.
-// B. The detection process while monitoring is ongoing.
-//
-// Although we aim to detect double shakes within a single window, the high rate of
-// incoming data makes it challenging. To ensure greater consistency, we have developed an
-// alternative method.
-//
-// Without this implementation, we may encounter problems such as a strong shake
-// triggering as a double shake during condition (A) at the start of monitoring or
-// inconsistent detection of double shake events.
+/// Detect a double shake gesture.
+///
+/// Only a limited number, keepValueCount, of readings are kept to prevent using more
+/// memory. The motionCutoff is the strength of the detected motion according to the
+/// standard deviation of readings.
+///
+/// We have two distinct detection states during our shake monitoring process:
+///
+/// A. The detection process from the beginning of monitoring.
+/// B. The detection process while monitoring is ongoing.
+///
+/// Although we aim to detect double shakes within a single window, the high rate of
+/// incoming data makes it challenging. To ensure greater consistency, we have developed an
+/// alternative method.
+///
+/// Without this implementation, we may encounter problems such as a strong shake
+/// triggering as a double shake during condition (A) at the start of monitoring or
+/// inconsistent detection of double shake events.
 struct DoubleShakeDetector: DoubleShakeDetectorProtocol
 {
     let motionManager: CMMotionManager

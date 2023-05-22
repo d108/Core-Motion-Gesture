@@ -1,15 +1,17 @@
-// SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
-// SPDX-License-Identifier: MIT License
+/* 
+ * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
+ * SPDX-License-Identifier: MIT License
+ */
 
 import SwiftUI
 
-// For managing detector view IDs.
+/// For managing detector view IDs.
 protocol DetectorViewIDsProtocol
 {
     func resetDetectorViewID(axis: MonitorAxis)
 }
 
-// Track IDs for detector views.
+/// Track IDs for detector views.
 final class DetectorsViewModel: ObservableObject, DetectorViewIDsProtocol
 {
     @Published var detectionViewIDs: [MonitorAxis: UUID]
@@ -41,8 +43,8 @@ final class DetectorsViewModel: ObservableObject, DetectorViewIDsProtocol
         detectionViewIDs[axis] = UUID()
     }
 
-    // Record the last detector view ID used to display an error.
-    // It allows us to disable animation when the view is reloaded.
+    /// Record the last detector view ID used to display an error.
+    /// It allows us to disable animation when the view is reloaded.
     func resetDetectorViewIDForError(axis: MonitorAxis)
     {
         let id = UUID()

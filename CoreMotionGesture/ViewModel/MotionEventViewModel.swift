@@ -1,10 +1,14 @@
-// SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
-// SPDX-License-Identifier: MIT License
+/* 
+ * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
+ * SPDX-License-Identifier: MIT License
+ */
 
 import Foundation
 import Combine
 
-// We can eventually process multiple errors.
+/// Errors that occur during motion detection.
+///
+/// We can eventually process multiple errors.
 protocol MotionEventViewModelErrorAlertProtocol
 {
     var showErrorAlert: Bool { get set }
