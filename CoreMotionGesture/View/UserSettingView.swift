@@ -36,6 +36,7 @@ struct UserSettingView: View
                 .padding()
                 .layoutPriority(2)
                 .if(Setting.shouldDebugLayout) { $0.border(.pink) }
+
             Spacer().layoutPriority(1)
             Button("Dismiss")
             {

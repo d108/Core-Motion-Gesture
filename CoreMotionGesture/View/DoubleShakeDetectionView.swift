@@ -120,7 +120,7 @@ struct DoubleShakeDetectionView: View
             secondaryDescriptiveText
             testErrorButton
             Spacer()
-            // Axis view
+
             AxisView(
                 motionEventViewModel: motionEventViewModel
             )
@@ -143,6 +143,7 @@ struct DoubleShakeDetectionView: View
                     }
                 }
             }
+
             monitoringButton
         }.if(Setting.shouldDebugLayout) { $0.border(.green) }
         .padding(.vertical)

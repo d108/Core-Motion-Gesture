@@ -69,7 +69,7 @@ struct ContentView: View
 
     var body: some View
     {
-        return NavigationView
+        NavigationView
         {
             TabView(selection: $tabSelectionViewModel.selectedTab)
             {
@@ -84,39 +84,21 @@ struct ContentView: View
                     .tag(axis)
                     .id(detectorsViewModel.detectionViewIDs[axis])
                 }
-            }.navigationBarTitle(
+            }
+            .navigationBarTitle(
                 Text("Core Motion Gesture Demo"),
                 displayMode: .inline
-            ).toolbar
+            )
+            .toolbar
             {
-                ToolbarItem(placement: .navigationBarTrailing)
-                {
-                    Button
-                    {
-                        showingSettingsSheet.toggle()
-                    } label:
-                    {
-                        Image(systemName: "info.circle")
-                    }
-                    .sheet(
-                        isPresented: $showingSettingsSheet,
-                        onDismiss:
-                        {
-                            showingSettingsSheet = false
-                            detectorsViewModel
-                                .resetDetectorViewIDForError(axis: tabSelectionViewModel.selectedTab)
-                        }
-                    )
-                    {
-                        UserSettingView(
-                            userSettingViewModel: userSettingViewModel,
-                            monitorAxis: tabSelectionViewModel.selectedTab
-                        )
-                        .environmentObject(appRunnerViewModel)
-                        .environmentObject(detectorsViewModel)
-                    }
-                }
+                DetectorToolBar(
+                    userSettingViewModel: userSettingViewModel,
+                    tabSelectionViewModel: tabSelectionViewModel,
+                    showingSettingsSheet: $showingSettingsSheet
+                )
             }
+            .environmentObject(appRunnerViewModel)
+            .environmentObject(detectorsViewModel)
         }
         .onChange(of: tabSelectionViewModel.selectedTab)
         { selectedTab in

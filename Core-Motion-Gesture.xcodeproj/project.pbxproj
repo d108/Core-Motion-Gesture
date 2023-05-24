@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6509A2862A04924A00D7FA36 /* ErrorAlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6509A2852A04924A00D7FA36 /* ErrorAlertFactory.swift */; };
+		65143EF32A1D8B7400CCAA46 /* DetectionToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65143EF22A1D8B7400CCAA46 /* DetectionToolBar.swift */; };
 		651E6F2429FEDDDE00C43B7C /* MotionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651E6F2329FEDDDE00C43B7C /* MotionEvent.swift */; };
 		651E6F2729FF03CA00C43B7C /* HapticGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651E6F2629FF03CA00C43B7C /* HapticGenerator.swift */; };
 		651E6F2929FF053B00C43B7C /* MockHapticGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651E6F2829FF053B00C43B7C /* MockHapticGenerator.swift */; };
@@ -69,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		6509A2852A04924A00D7FA36 /* ErrorAlertFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAlertFactory.swift; sourceTree = "<group>"; };
+		65143EF22A1D8B7400CCAA46 /* DetectionToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionToolBar.swift; sourceTree = "<group>"; };
 		651E6F2329FEDDDE00C43B7C /* MotionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionEvent.swift; sourceTree = "<group>"; };
 		651E6F2629FF03CA00C43B7C /* HapticGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticGenerator.swift; sourceTree = "<group>"; };
 		651E6F2829FF053B00C43B7C /* MockHapticGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHapticGenerator.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				657E7F4A2A0AED1C0072C11E /* AxisView.swift */,
 				6575918B2A09E7B4001F07E6 /* ButtonStyle.swift */,
 				65EA24FF29F19D7400760C4C /* ContentView.swift */,
+				65143EF22A1D8B7400CCAA46 /* DetectionToolBar.swift */,
 				6569B0E42A01CE6300BF820F /* DoubleShakeDetectionView.swift */,
 				65587D5B2A0EDBD40086D1F4 /* UserSettingView.swift */,
 			);
@@ -454,6 +457,7 @@
 				6569B0E52A01CE6300BF820F /* DoubleShakeDetectionView.swift in Sources */,
 				65587D6A2A0EF1D20086D1F4 /* MockUserSettingStorage.swift in Sources */,
 				655AFA672A098B31005B9BC9 /* UserError.swift in Sources */,
+				65143EF32A1D8B7400CCAA46 /* DetectionToolBar.swift in Sources */,
 				651E6F2729FF03CA00C43B7C /* HapticGenerator.swift in Sources */,
 				65587D642A0EE3070086D1F4 /* EventDecider.swift in Sources */,
 				65587D662A0EEC290086D1F4 /* UserSetting.swift in Sources */,
