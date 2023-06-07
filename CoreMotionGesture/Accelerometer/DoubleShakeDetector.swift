@@ -1,11 +1,11 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
 
-import SwiftUI
 import Combine
 import CoreMotion
+import SwiftUI
 
 protocol DoubleShakeDetectorProtocol
 {
@@ -17,22 +17,23 @@ protocol DoubleShakeDetectorProtocol
 
 /// Detect a double shake gesture.
 ///
-/// Only a limited number, keepValueCount, of readings are kept to prevent using more
-/// memory. The motionCutoff is the strength of the detected motion according to the
-/// standard deviation of readings.
+/// Only a limited number, keepValueCount, of readings are kept to prevent using
+/// more memory. The motionCutoff is the strength of the detected motion
+/// according to the standard deviation of readings.
 ///
 /// We have two distinct detection states during our shake monitoring process:
 ///
 /// A. The detection process from the beginning of monitoring.
+///
 /// B. The detection process while monitoring is ongoing.
 ///
-/// Although we aim to detect double shakes within a single window, the high rate of
-/// incoming data makes it challenging. To ensure greater consistency, we have developed an
-/// alternative method.
+/// Although we aim to detect double shakes within a single window, the high
+/// rate of incoming data makes it challenging. To ensure greater consistency,
+/// we have developed an alternative method.
 ///
-/// Without this implementation, we may encounter problems such as a strong shake
-/// triggering as a double shake during condition (A) at the start of monitoring or
-/// inconsistent detection of double shake events.
+/// Without this implementation, we may encounter problems such as a strong
+/// shake triggering as a double shake during condition (A) at the start of
+/// monitoring or inconsistent detection of double shake events.
 struct DoubleShakeDetector: DoubleShakeDetectorProtocol
 {
     let motionManager: CMMotionManager
@@ -51,12 +52,12 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
     init(
         motionManager: CMMotionManager,
         monitorAxis: MonitorAxis,
-        motionEventStream: MotionEventStreamProtocol
+        motionEventStream _: MotionEventStreamProtocol
     )
     {
         self.motionManager = motionManager
         motionManager.accelerometerUpdateInterval = accelerometerUpdateInterval
-        self.motionEventStream = MotionEventStream()
+        motionEventStream = MotionEventStream()
         self.monitorAxis = monitorAxis
     }
 
@@ -73,7 +74,7 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
 
         let accelerationValue: (CMAccelerometerData, MonitorAxis) -> Double =
         { data, axis in
-            var accelerationValue: Double = 0.0
+            var accelerationValue = 0.0
             switch axis
             {
             case .x: accelerationValue = data.acceleration.x
@@ -109,16 +110,16 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
 
                 // Start detection of the first shake.
                 if readingCount <= readingMinimum,
-                    shakeCount < 1,
-                    stddev < stddevThreshold
+                   shakeCount < 1,
+                   stddev < stddevThreshold
                 {
                     readingCount += 1
                 }
 
                 // Start detection of the second shake.
                 if readingCount <= readingMinimum,
-                    shakeCount >= 1,
-                    stddev < stddevThreshold
+                   shakeCount >= 1,
+                   stddev < stddevThreshold
                 {
                     readingCount += 1
                     if readingCount > readingMinimum - 2
@@ -127,7 +128,8 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
                     }
                 }
 
-                // We seed readingMinimum readings to ensure detection is active and stable.
+                // We seed readingMinimum readings to ensure detection is active
+                // and stable.
                 if readingCount > readingMinimum
                 {
                     if stddev > motionCutoff
@@ -135,7 +137,8 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
                         if shouldIncrementShakeCount
                         {
                             shakeCount += 1
-                            if shakeCount > 0, shakeCount < shakeDetectionMinimum
+                            if shakeCount > 0,
+                               shakeCount < shakeDetectionMinimum
                             {
                                 startTime = Date()
                             }
@@ -143,18 +146,29 @@ struct DoubleShakeDetector: DoubleShakeDetectorProtocol
                             readingCount = 0
                         }
                     }
-                    let insideTimeWindow: (Date, Date, TimeInterval, TimeInterval) -> Bool =
-                    { start, end, min, max in
-                        let interval = end.timeIntervalSince(start)
-                        let inRange = interval >= min && interval <= max
-                        return inRange
-                    }
+                    let insideTimeWindow: (
+                        Date,
+                        Date,
+                        TimeInterval,
+                        TimeInterval
+                    )
+                        -> Bool =
+                        { start, end, min, max in
+                            let interval = end.timeIntervalSince(start)
+                            let inRange = interval >= min && interval <= max
+                            return inRange
+                        }
                     if shakeCount >= shakeDetectionMinimum ||
                         outsideWindowCount >= shakeDetectionMinimum
                     {
                         endTime = Date()
                         assert(startTime < endTime)
-                        if insideTimeWindow(startTime, endTime, timeWindowMin, timeWindowMax)
+                        if insideTimeWindow(
+                            startTime,
+                            endTime,
+                            timeWindowMin,
+                            timeWindowMax
+                        )
                         {
                             sendMotionEvent()
                             outsideWindowCount = 0

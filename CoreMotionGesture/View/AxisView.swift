@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -23,7 +23,7 @@ struct AxisView: View
     )
     {
         self.motionEventViewModel = motionEventViewModel
-        self.axis = motionEventViewModel.motionDetector.monitorAxis
+        axis = motionEventViewModel.motionDetector.monitorAxis
     }
 
     var wave: some View
@@ -34,10 +34,10 @@ struct AxisView: View
             Image(systemName: MonitoringSystemImage.doubleShaked.rawValue)
                 .resizable(resizingMode: .stretch)
                 .scaleEffect(motionEventViewModel.doubleShaked
-                    ? CGSize(width: 1.0, height: waveHeightStart):
-                    CGSize(width: 1.0, height: waveHeightEnd)
-                )
-                .animation(AnimationFactory.moreBounce().delay(0.2).repeatForever())
+                    ? CGSize(width: 1.0, height: waveHeightStart) :
+                    CGSize(width: 1.0, height: waveHeightEnd))
+                .animation(AnimationFactory.moreBounce().delay(0.2)
+                    .repeatForever())
         }.opacity(motionEventViewModel.doubleShaked ? visible : invisible)
     }
 
@@ -49,8 +49,7 @@ struct AxisView: View
             .foregroundColor(circleColor)
             .overlay(Circle()
                 .stroke(circleColor, lineWidth: circleLinewidth)
-                .frame(width: circleWidth)
-            )
+                .frame(width: circleWidth))
     }
 
     var body: some View

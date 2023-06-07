@@ -1,10 +1,10 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
 
-import Foundation
 import Combine
+import Foundation
 
 /// Errors that occur during motion detection.
 ///
@@ -37,21 +37,27 @@ final class MotionEventViewModel:
         set
         {
             _errorAlert = newValue
-            if _errorAlert != nil { showErrorAlert = true }
-            else { showErrorAlert = false }
+            if _errorAlert != nil
+            {
+                showErrorAlert = true
+            } else
+            {
+                showErrorAlert = false
+            }
         }
     }
+
     let motionDetector: DoubleShakeDetectorProtocol
     let fatalErrorText = "Missing Publisher: Should Not Happen"
     var cancellables = Set<AnyCancellable>()
 
     init(motionDetector: DoubleShakeDetectorProtocol)
     {
-        self.motionEvent = .none
-        self.doubleShaked = false
-        self.monitoringButtonState = .notStarted
+        motionEvent = .none
+        doubleShaked = false
+        monitoringButtonState = .notStarted
         self.motionDetector = motionDetector
-        self.handleStreamEvents()
+        handleStreamEvents()
     }
 
     func handleMonitoring(buttonState: MonitoringButtonState)
@@ -66,35 +72,47 @@ final class MotionEventViewModel:
     func handleStreamEvents()
     {
         guard let motionEventStream = motionDetector.motionEventStream,
-            let motionEventPublisher = motionEventStream.motionEventPublisher
-            else { fatalError(fatalErrorText) }
+              let motionEventPublisher = motionEventStream.motionEventPublisher
+        else
+        {
+            fatalError(fatalErrorText)
+        }
         motionEventPublisher
             .sink(
-            receiveCompletion:
-            { completion in
-                switch completion
-                {
-                case .finished: break
-                case .failure(let motionError):
-                    self.errorAlert = ErrorAlert(message: motionError.failureReason ??
-                        Setting.unknownErrorText)
-                    self.appendMotionError(motionError: motionError)
+                receiveCompletion:
+                { completion in
+                    switch completion
+                    {
+                    case .finished: break
+                    case let .failure(motionError):
+                        self
+                            .errorAlert = ErrorAlert(message: motionError
+                                .failureReason ??
+                                Setting.unknownErrorText)
+                        self.appendMotionError(motionError: motionError)
+                    }
+                },
+                receiveValue:
+                { _ in
+                    self.doubleShaked = true
+                    DispatchQueue.main
+                        .asyncAfter(deadline: .now() + Setting.waveImageDelay)
+                        {
+                            self.doubleShaked = false
+                        }
+                    // Our data stream is designed to receive events
+                    // continuously, but it completes on
+                    // an error, according to the Publisher contract. The timing
+                    // of responses to state
+                    // changes is also crucial. We have a published property
+                    // called `doubleShaked`,
+                    // which is a Bool that toggles with a predefined delay. As
+                    // a result, multiple
+                    // events that occur within this window will not trigger
+                    // extra user interface
+                    // responses.
                 }
-            },
-            receiveValue:
-            { motionEvent in
-                self.doubleShaked = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + Setting.waveImageDelay)
-                {
-                    self.doubleShaked = false
-                }
-                // Our data stream is designed to receive events continuously, but it completes on
-                // an error, according to the Publisher contract. The timing of responses to state
-                // changes is also crucial. We have a published property called `doubleShaked`,
-                // which is a Bool that toggles with a predefined delay. As a result, multiple
-                // events that occur within this window will not trigger extra user interface
-                // responses.
-            })
+            )
             .store(in: &cancellables)
     }
 

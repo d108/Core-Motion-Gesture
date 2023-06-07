@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -34,7 +34,7 @@ extension DoubleShakeDetector
 
     func sendMotionError(
         error: MotionError,
-        description: String = ""
+        description _: String = ""
     )
     {
         stopMonitoring()

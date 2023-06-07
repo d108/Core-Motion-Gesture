@@ -1,10 +1,10 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
 
-import SwiftUI
 import CoreMotion
+import SwiftUI
 
 enum AppError: LocalizedError
 {
@@ -14,7 +14,7 @@ enum AppError: LocalizedError
     {
         switch self
         {
-        case .storageFailedToInitialize(let suiteName):
+        case let .storageFailedToInitialize(suiteName):
             return "🚨UserDefaults with suite name \(suiteName) failed to initialize."
         }
     }
@@ -31,7 +31,7 @@ struct CoreMotionGestureApp: App
 
     init()
     {
-        self.hapticGenerator = HapticGenerator(
+        hapticGenerator = HapticGenerator(
             generator: UINotificationFeedbackGenerator()
         )
         guard let defaults = UserDefaults.group else
@@ -40,13 +40,14 @@ struct CoreMotionGestureApp: App
                 AppError
                     .storageFailedToInitialize(Setting.suiteName)
                     .failureReason ??
-                Setting.unknownErrorText
+                    Setting.unknownErrorText
             )
         }
-        self.userSettingStorage = UserSettingStorage(defaults: defaults)
-        self.tabSelectionViewModel = TabSelectionViewModel(defaults: defaults)
-        self.appRunnerViewModel = AppRunnerViewModel()
-        self.userSettingViewModel = UserSettingViewModel(userSettingStorage: userSettingStorage)
+        userSettingStorage = UserSettingStorage(defaults: defaults)
+        tabSelectionViewModel = TabSelectionViewModel(defaults: defaults)
+        appRunnerViewModel = AppRunnerViewModel()
+        userSettingViewModel =
+            UserSettingViewModel(userSettingStorage: userSettingStorage)
     }
 
     var body: some Scene

@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -22,12 +22,13 @@ enum MotionError: LocalizedError
             return "Expected accelerometer data is not available."
         case .testError:
             return "User forced completion by failure."
-        case .accelerometerFailed(let description):
+        case let .accelerometerFailed(description):
             let fatalError = "Accelerometer failed"
             if let description = description
             {
                 return fatalError + ": " + description
-            } else {
+            } else
+            {
                 return fatalError
             }
         }

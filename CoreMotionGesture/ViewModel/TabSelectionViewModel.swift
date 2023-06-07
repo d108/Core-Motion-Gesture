@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -32,10 +32,10 @@ final class TabSelectionViewModel:
 
     init(defaults: UserDefaults)
     {
-        self.userTabStorage = UserTabStorage(defaults: defaults)
+        userTabStorage = UserTabStorage(defaults: defaults)
         do
         {
-            _selectedTab = Published(initialValue: try userTabStorage.loadTab())
+            _selectedTab = try Published(initialValue: userTabStorage.loadTab())
         } catch
         {
             _selectedTab = Published(initialValue: Setting.defaultTab)
@@ -47,6 +47,6 @@ extension TabSelectionViewModel: TabViewRunnable
 {
     func onTimeChange(tab: MonitorAxisTab)
     {
-        self.selectedTab = tab
+        selectedTab = tab
     }
 }

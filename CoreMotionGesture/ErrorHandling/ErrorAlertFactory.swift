@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -29,13 +29,14 @@ struct ErrorAlertFactory
         self.detectorsViewModel = detectorsViewModel
     }
 
-    func errorAlert(message: String = "", axis: MonitorAxis) -> Alert
+    func errorAlert(message _: String = "", axis: MonitorAxis) -> Alert
     {
         return Alert(
             title: Text(errorTitle),
             message: Text(
                 motionEventViewModel.motionErrors?
-                    .first?.failureReason ?? unknownError),
+                    .first?.failureReason ?? unknownError
+            ),
             dismissButton: .default(Text(okay))
             {
                 self.detectorsViewModel.resetDetectorViewIDForError(axis: axis)

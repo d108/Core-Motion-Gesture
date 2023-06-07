@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -20,16 +20,16 @@ final class DetectorsViewModel: ObservableObject, DetectorViewIDsProtocol
 
     let idsDictionary: ()
         -> [MonitorAxis: UUID] =
-    {
-        var ids = [MonitorAxis: UUID]()
-
-        MonitorAxis.allCases.forEach
         {
-            ids[$0] = UUID()
-        }
+            var ids = [MonitorAxis: UUID]()
 
-        return ids
-    }
+            MonitorAxis.allCases.forEach
+            {
+                ids[$0] = UUID()
+            }
+
+            return ids
+        }
 
     init()
     {

@@ -1,10 +1,10 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
 
-import Foundation
 import Combine
+import Foundation
 
 final class TabViewRunner: TimeChangerProtocol
 {

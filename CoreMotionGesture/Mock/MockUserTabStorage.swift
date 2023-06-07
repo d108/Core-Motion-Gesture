@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -9,7 +9,7 @@ struct MockUserTabStorage: UserTabStorageProtocol
 {
     var defaults: UserDefaults
 
-    func storeTab(selectedTab: MonitorAxis)
+    func storeTab(selectedTab _: MonitorAxis)
     {
         // dummy implementation
     }

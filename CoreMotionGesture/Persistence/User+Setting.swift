@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -36,8 +36,10 @@ struct UserSettingStorage: UserSettingStorageProtocol
     {
         let shouldOpenSettingsOnStart: Bool? = defaults
             .getCodable(forKey: UserSetting.shouldOpenSettingsOnStart.key)
-        guard let shouldOpenSettingsOnStart = shouldOpenSettingsOnStart
-            else { throw UserError.noDataAvailable }
+        guard let shouldOpenSettingsOnStart = shouldOpenSettingsOnStart else
+        {
+            throw UserError.noDataAvailable
+        }
 
         return shouldOpenSettingsOnStart
     }
@@ -54,8 +56,10 @@ struct UserSettingStorage: UserSettingStorageProtocol
     {
         let shouldDebugLayout: Bool? = defaults
             .getCodable(forKey: UserSetting.shouldDebugLayout.key)
-        guard let shouldDebugLayout = shouldDebugLayout
-            else { throw UserError.noDataAvailable }
+        guard let shouldDebugLayout = shouldDebugLayout else
+        {
+            throw UserError.noDataAvailable
+        }
 
         return shouldDebugLayout
     }

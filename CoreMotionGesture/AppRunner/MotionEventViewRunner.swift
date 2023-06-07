@@ -1,10 +1,10 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
 
-import Foundation
 import Combine
+import Foundation
 
 final class MotionEventViewRunner: TimeChangerProtocol
 {
@@ -25,16 +25,16 @@ final class MotionEventViewRunner: TimeChangerProtocol
         cancellables = Set<AnyCancellable>()
     }
 
-    // While the subject below is not strictly needed, it serves to decouple double shake
-    // event simulation from the timer.
+    // While the subject below is not strictly needed, it serves to decouple
+    // double shake event simulation from the timer.
     func runTimer()
     {
         subject
-            .sink(receiveValue:
+            .sink
             { event in
                 print("press \(event)")
                 self.simulateDoubleShaked(with: 0.8)
-            })
+            }
             .store(in: &cancellables)
 
         let timer = Timer.publish(every: delay, on: .main, in: .common)
@@ -46,13 +46,15 @@ final class MotionEventViewRunner: TimeChangerProtocol
             {
                 self.runnableViewModel.pressTestError()
 
-                // Not causing view regeneration here is necessary to prevent unwanted
-                // TabViewRunner instances. Therefore, we have disabled the following
-                // code:
-                // DispatchQueue.main.asyncAfter(deadline: self.errorClearDeadline)
+                // Not causing view regeneration here is necessary to prevent
+                // unwanted TabViewRunner instances. Therefore, we have disabled
+                // the following code:
+                //
+                // DispatchQueue.main.asyncAfter(deadline:
+                // self.errorClearDeadline)
                 // {
-                //    self.detectorsViewModel.resetDetectorViewIDForError(
-                //        axis: self.motionEventViewModel.motionDetector.monitorAxis
+                //    self.detectorsViewModel.resetDetectorViewIDForError( axis:
+                //        self.motionEventViewModel.motionDetector.monitorAxis
                 //    )
                 // }
             }
@@ -62,14 +64,19 @@ final class MotionEventViewRunner: TimeChangerProtocol
             }
             if isMonitoring
             {
-                self.runnableViewModel.setMonitoringButtonState(monitoringButtonState: .started)
+                self.runnableViewModel
+                    .setMonitoringButtonState(monitoringButtonState: .started)
                 self.subject.send(1)
             } else
             {
-                self.runnableViewModel.setMonitoringButtonState(monitoringButtonState: .notStarted)
+                self.runnableViewModel
+                    .setMonitoringButtonState(
+                        monitoringButtonState: .notStarted
+                    )
                 self.subject.send(completion: .finished)
 
-                // We should not create a new view using the detectors view model
+                // We should not create a new view using the detectors view
+                // model
                 // according to the following code.
                 //     self.detectorsViewModel.resetDetectorViewIDForError(
                 //         axis:  self.motionEventViewModel.motionDetector.monitorAxis
@@ -78,17 +85,17 @@ final class MotionEventViewRunner: TimeChangerProtocol
         }.store(in: &cancellables)
     }
 
-    private func simulateDoubleShaked(with probability: Probability)
+    private func simulateDoubleShaked(with _: Probability)
     {
-        if self.runnableViewModel.monitoringButtonState == .started
+        if runnableViewModel.monitoringButtonState == .started
         {
             if EventDecider.random(with: 0.8)
             {
-                self.runnableViewModel.updateDoubleShaked(doubleShaked: true)
+                runnableViewModel.updateDoubleShaked(doubleShaked: true)
             }
         } else
         {
-            self.runnableViewModel.updateDoubleShaked(doubleShaked: false)
+            runnableViewModel.updateDoubleShaked(doubleShaked: false)
         }
     }
 }

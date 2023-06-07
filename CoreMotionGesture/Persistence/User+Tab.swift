@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -31,9 +31,11 @@ struct UserTabStorage: UserTabStorageProtocol
     func loadTab() throws -> MonitorAxisTab
     {
         let axis: MonitorAxisTab? = defaults.getCodable(forKey: key)
-        guard let axis = axis
-            else { throw UserError.noDataAvailable }
-        
+        guard let axis = axis else
+        {
+            throw UserError.noDataAvailable
+        }
+
         return axis
     }
 }

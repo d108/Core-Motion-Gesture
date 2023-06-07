@@ -1,10 +1,10 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
 
-import XCTest
 import CoreMotion
+import XCTest
 @testable import CoreMotionGesture
 
 final class CoreMotionGestureTests: XCTestCase

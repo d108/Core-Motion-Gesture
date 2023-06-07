@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: MIT License
  */
 
-import SwiftUI
-import CoreMotion
 import Combine
+import CoreMotion
+import SwiftUI
 
 struct ContentView: View
 {
     @ObservedObject var detectorsViewModel: DetectorsViewModel =
-        DetectorsViewModel()
+        .init()
     @ObservedObject var tabSelectionViewModel: TabSelectionViewModel
     @EnvironmentObject var appRunnerViewModel: AppRunnerViewModel
     @State var cancellables = Set<AnyCancellable>()
@@ -20,20 +20,23 @@ struct ContentView: View
     { axis in
         Label(axis.asAxisText(), systemImage: axis.imageName())
     }
+
     let motionDetector: (MonitorAxis, MotionEventStreamProtocol)
         -> DoubleShakeDetectorProtocol =
-    { axis, eventStream in
-        DoubleShakeDetector(
-            motionManager: CMMotionManager(),
-            monitorAxis: axis,
-            motionEventStream: eventStream
-        )
-    }
+        { axis, eventStream in
+            DoubleShakeDetector(
+                motionManager: CMMotionManager(),
+                monitorAxis: axis,
+                motionEventStream: eventStream
+            )
+        }
+
     let coreMotionGestureViewModel: (DoubleShakeDetectorProtocol)
         -> MotionEventViewModel =
-    { detector in
-        MotionEventViewModel(motionDetector: detector)
-    }
+        { detector in
+            MotionEventViewModel(motionDetector: detector)
+        }
+
     let hapticGenerator: HapticGeneratorProtocol?
     var tabViewTimeChanger: any TimeChangerProtocol
     let userSettingViewModel: UserSettingViewModel
@@ -46,7 +49,7 @@ struct ContentView: View
     {
         self.hapticGenerator = hapticGenerator
         self.tabSelectionViewModel = tabSelectionViewModel
-        self.tabViewTimeChanger =
+        tabViewTimeChanger =
             TabViewRunner(runnableViewModel: tabSelectionViewModel)
         self.userSettingViewModel = userSettingViewModel
     }
@@ -55,7 +58,8 @@ struct ContentView: View
     func doubleShakeDetectionView(
         monitorAxis: MonitorAxis,
         motionEventStream: MotionEventStreamProtocol
-    ) -> some View
+    )
+        -> some View
     {
         DoubleShakeDetectionView(
             hapticGenerator: hapticGenerator,
@@ -91,7 +95,7 @@ struct ContentView: View
             )
             .toolbar
             {
-				// We separate the toolbar items by grouping them into a
+                // We separate the toolbar items by grouping them into a
                 // ToolBarContent. However, The cost is having to pass in
                 // environment-based view models as parameters. This is because
                 // the ToolbarContent is not part of the view hierarchy.
@@ -118,12 +122,14 @@ struct ContentView: View
         {
             assert(type(of: appRunnerViewModel) == AppRunnerViewModel.self)
             if userSettingViewModel.shouldOpenSettingsOnStart,
-                    !userSettingViewModel.settingsShownOnStart
+               !userSettingViewModel.settingsShownOnStart
             {
                 showingSettingsSheet = true
                 userSettingViewModel.settingsShownOnStart = true
             }
-            tabViewTimeChanger.appRunnerShouldRun(shouldRun: appRunnerViewModel.shouldRunTabView)
+            tabViewTimeChanger
+                .appRunnerShouldRun(shouldRun: appRunnerViewModel
+                    .shouldRunTabView)
         }
     }
 }
@@ -132,14 +138,18 @@ struct ContentView_Previews: PreviewProvider
 {
     static var previews: some View
     {
-        let tabSelectionViewModel = TabSelectionViewModel(defaults: MockUserDefaults())
-        let userSettingStorage = MockUserSettingStorage(defaults: MockUserDefaults())
+        let tabSelectionViewModel =
+            TabSelectionViewModel(defaults: MockUserDefaults())
+        let userSettingStorage =
+            MockUserSettingStorage(defaults: MockUserDefaults())
         let appRunnerViewModel = AppRunnerViewModel()
-        let userSettingViewModel = UserSettingViewModel(userSettingStorage: userSettingStorage)
+        let userSettingViewModel =
+            UserSettingViewModel(userSettingStorage: userSettingStorage)
 
         ContentView(
             tabSelectionViewModel: tabSelectionViewModel,
             userSettingViewModel: userSettingViewModel
-        ).environmentObject(appRunnerViewModel)
+        )
+        .environmentObject(appRunnerViewModel)
     }
 }

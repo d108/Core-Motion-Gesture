@@ -1,10 +1,10 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
 
-import Foundation
 import Combine
+import Foundation
 
 protocol MotionEventStreamProtocol
 {
@@ -21,7 +21,7 @@ struct MotionEventStream: MotionEventStreamProtocol
 
     init()
     {
-        self.motionEventPublisher = self.motionEventPassthroughSubject
+        motionEventPublisher = motionEventPassthroughSubject
             .eraseToAnyPublisher()
     }
 

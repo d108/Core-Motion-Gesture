@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -9,7 +9,7 @@ struct MockUserSettingStorage: UserSettingStorageProtocol
 {
     var defaults: UserDefaults
 
-    func storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart: Bool)
+    func storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart _: Bool)
     {
         // dummy implementation
     }
@@ -19,7 +19,7 @@ struct MockUserSettingStorage: UserSettingStorageProtocol
         return false
     }
 
-    func storeShouldDebugLayout(shouldDebugLayout: Bool)
+    func storeShouldDebugLayout(shouldDebugLayout _: Bool)
     {
         // dummy implementation
     }

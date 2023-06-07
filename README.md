@@ -55,6 +55,26 @@ Please find some notes about the detector listed below.
 
 Our app's architectural layers are cleanly separated, enabling smooth handling of all axes, even though we initially coded for only one axis.
 
+## Code linting and formatting
+
+Since brace style is a matter of personal preference, I have included scripts
+and configurations to lint and format to either the "next line," requires
+[SwiftFormat](https://github.com/nicklockwood/SwiftFormat), or "end of line,"
+requires [swift-format](https://github.com/apple/swift-format). 
+
+To use, run the following commands:
+
+    $ cd Core-Motion-Gesture
+
+and
+
+	$ ./bin/swift-files-to-next-line-braces.sh
+
+or
+
+	$ ./bin/swift-files-to-eol-braces.sh
+
+
 ### Errors will likely never not happen
 
 To create our detector as a series of events, we utilized a Publisher. If we modify the declaration of our `motionEventPublisher` away from the `Never` in `AnyPublisher<MotionEvent, Never>,` errors can be sent into it.

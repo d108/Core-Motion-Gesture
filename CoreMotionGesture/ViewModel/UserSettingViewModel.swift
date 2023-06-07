@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -16,7 +16,8 @@ final class UserSettingViewModel: ObservableObject
         self.userSettingStorage = userSettingStorage
         do
         {
-            shouldOpenSettingsOnStart = try userSettingStorage.loadShouldOpenSettingsOnStart()
+            shouldOpenSettingsOnStart = try userSettingStorage
+                .loadShouldOpenSettingsOnStart()
         } catch
         {
             shouldOpenSettingsOnStart = false

@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -11,7 +11,8 @@ protocol AppRunnerProtocol
     func cancelAll()
 }
 
-// The mutating default implementation does not play well with SwiftUI immutable views.
+// The mutating default implementation does not play well with SwiftUI immutable
+// views.
 //
 //    extension AppRunnerProtocol
 //    {

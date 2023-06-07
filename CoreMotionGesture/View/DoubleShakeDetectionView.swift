@@ -1,10 +1,10 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 typealias ButtonPress = Int
 
@@ -19,17 +19,21 @@ struct DoubleShakeDetectionView: View
     { state in
         Label(state.buttonText(), systemImage: state.imageName())
     }
+
     let testErrorText = "Test Error"
     let hapticGenerator: HapticGeneratorProtocol?
     let errorAlertFactory: (MotionEventViewModel, DetectorsViewModel)
         -> ErrorAlertFactory =
-    {
-        ErrorAlertFactory(motionEventViewModel: $0, detectorsViewModel: $1)
-    }
+        {
+            ErrorAlertFactory(motionEventViewModel: $0, detectorsViewModel: $1)
+        }
+
     let newViewWasForError: (DetectorsViewModel, MonitorAxis) -> Bool =
     { viewModel, axis in
-        viewModel.lastDetectionViewIDForError == viewModel.detectionViewIDs[axis]
+        viewModel.lastDetectionViewIDForError == viewModel
+            .detectionViewIDs[axis]
     }
+
     @ObservedObject var motionEventViewModel: MotionEventViewModel
     @ObservedObject var detectorsViewModel: DetectorsViewModel
     @EnvironmentObject var appRunnerViewModel: AppRunnerViewModel
@@ -46,11 +50,11 @@ struct DoubleShakeDetectionView: View
     {
         self.hapticGenerator = hapticGenerator
         self.motionEventViewModel = motionEventViewModel
-        self.axis = motionEventViewModel.motionDetector.monitorAxis
+        axis = motionEventViewModel.motionDetector.monitorAxis
         _shouldExpand = State(initialValue: true)
         _animationValue = State(initialValue: 0)
         self.detectorsViewModel = detectorsViewModel
-        self.motionEventViewRunner =
+        motionEventViewRunner =
             MotionEventViewRunner(runnableViewModel: motionEventViewModel)
     }
 
@@ -91,28 +95,32 @@ struct DoubleShakeDetectionView: View
             {
                 switch motionEventViewModel.monitoringButtonState
                 {
-                case .started: motionEventViewModel.monitoringButtonState = .notStarted
-                case .notStarted: motionEventViewModel.monitoringButtonState = .started
+                case .started: motionEventViewModel
+                    .monitoringButtonState = .notStarted
+                case .notStarted: motionEventViewModel
+                    .monitoringButtonState = .started
                 }
             } label:
             {
                 switch motionEventViewModel.monitoringButtonState
                 {
-                case .started: buttonLabel(motionEventViewModel.monitoringButtonState)
-                case .notStarted: buttonLabel(motionEventViewModel.monitoringButtonState)
+                case .started: buttonLabel(motionEventViewModel
+                        .monitoringButtonState)
+                case .notStarted: buttonLabel(motionEventViewModel
+                        .monitoringButtonState)
                 }
             }
             Spacer().frame(maxHeight: Setting.higButtonHeight)
         }.if(Setting.shouldDebugLayout) { $0.border(.pink) }
         .buttonStyle(RoundedButton(
-            isActivated: motionEventViewModel.monitoringButtonState == .started)
-        )
+            isActivated: motionEventViewModel.monitoringButtonState == .started
+        ))
     }
 
     var body: some View
     {
         print("button state is \(motionEventViewModel.monitoringButtonState)",
-            "for axis \(motionEventViewModel.motionDetector.monitorAxis)")
+              "for axis \(motionEventViewModel.motionDetector.monitorAxis)")
         return VStack(spacing: Setting.vspace)
         {
             Spacer()
@@ -127,21 +135,24 @@ struct DoubleShakeDetectionView: View
             .id(detectorsViewModel.axisViewIDs[axis])
             .scaleEffect(shouldExpand &&
                 !newViewWasForError(detectorsViewModel, axis)
-                ? axisScaleStart : axisScaleEnd
-            )
+                ? axisScaleStart : axisScaleEnd)
             .animation(AnimationFactory.lessBounce(), value: animationValue)
             .onAppear
             {
                 shouldExpand = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + axisExpandAfter)
-                {
-                    self.shouldExpand = false
-                    let skipAnimation = newViewWasForError(detectorsViewModel, axis)
-                    if !skipAnimation
+                DispatchQueue.main
+                    .asyncAfter(deadline: .now() + axisExpandAfter)
                     {
-                        animationValue = 1
+                        self.shouldExpand = false
+                        let skipAnimation = newViewWasForError(
+                            detectorsViewModel,
+                            axis
+                        )
+                        if !skipAnimation
+                        {
+                            animationValue = 1
+                        }
                     }
-                }
             }
 
             monitoringButton
@@ -163,20 +174,23 @@ struct DoubleShakeDetectionView: View
         { shouldRun in
             motionEventViewRunner.appRunnerShouldRun(shouldRun: shouldRun)
         }
-        .onAppear()
+        .onAppear
         {
             assert(type(of: appRunnerViewModel) == AppRunnerViewModel.self)
             motionEventViewRunner.appRunnerShouldRun(
                 shouldRun: appRunnerViewModel.shouldRunDetectionView
             )
         }
-        .onDisappear()
+        .onDisappear
         {
             motionEventViewModel.monitoringButtonState = .notStarted
         }
         .alert(isPresented: $motionEventViewModel.showErrorAlert)
         {
-            let factory = errorAlertFactory(motionEventViewModel, detectorsViewModel)
+            let factory = errorAlertFactory(
+                motionEventViewModel,
+                detectorsViewModel
+            )
             return factory.errorAlert(
                 axis: motionEventViewModel.motionDetector.monitorAxis
             )

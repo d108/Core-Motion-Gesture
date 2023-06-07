@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -12,13 +12,20 @@ extension View
     /// - Parameters:
     ///   - condition: The condition to evaluate.
     ///   - transform: The transform to apply to the source `View`.
-    /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
+    /// - Returns: Either the original `View` or the modified `View` if the
+    /// condition is `true`.
     @ViewBuilder func `if`<Content: View>(
         _ condition: Bool,
         transform: (Self) -> Content
-    ) -> some View
+    )
+        -> some View
     {
-        if condition { transform(self) }
-        else { self }
+        if condition
+        {
+            transform(self)
+        } else
+        {
+            self
+        }
     }
 }

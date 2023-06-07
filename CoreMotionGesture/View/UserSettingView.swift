@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -22,20 +22,33 @@ struct UserSettingView: View
             Text("Reveal Flaws using Testing Patterns").padding()
             Group
             {
-                Toggle("Open Settings on Start", isOn: $userSettingViewModel.shouldOpenSettingsOnStart).padding(.horizontal)
-                Toggle("Tab View Runner", isOn: $appRunnerViewModel.shouldRunTabView).padding(.horizontal)
-                Toggle("Detection View Runner", isOn: $appRunnerViewModel.shouldRunDetectionView).padding(.horizontal)
+                Toggle(
+                    "Open Settings on Start",
+                    isOn: $userSettingViewModel.shouldOpenSettingsOnStart
+                ).padding(.horizontal)
+                Toggle(
+                    "Tab View Runner",
+                    isOn: $appRunnerViewModel.shouldRunTabView
+                ).padding(.horizontal)
+                Toggle(
+                    "Detection View Runner",
+                    isOn: $appRunnerViewModel.shouldRunDetectionView
+                ).padding(.horizontal)
             }
-            Text("With only a detection view runner, views might get stuck on the test error view.")
-                .font(.caption)
-                .padding()
-                .layoutPriority(2)
-                .if(Setting.shouldDebugLayout) { $0.border(.green) }
-            Text("After pressing dismiss, slide to dismiss this view if needed on iOS 14. View regeneration interferes with the dismiss action.")
-                .font(.caption)
-                .padding()
-                .layoutPriority(2)
-                .if(Setting.shouldDebugLayout) { $0.border(.pink) }
+            Text(
+                "With only a detection view runner, views might get stuck on the test error view."
+            )
+            .font(.caption)
+            .padding()
+            .layoutPriority(2)
+            .if(Setting.shouldDebugLayout) { $0.border(.green) }
+            Text(
+                "After pressing dismiss, slide to dismiss this view if needed on iOS 14. View regeneration interferes with the dismiss action."
+            )
+            .font(.caption)
+            .padding()
+            .layoutPriority(2)
+            .if(Setting.shouldDebugLayout) { $0.border(.pink) }
 
             Spacer().layoutPriority(1)
             Button("Dismiss")
@@ -44,15 +57,17 @@ struct UserSettingView: View
             }
             Spacer().layoutPriority(1)
         }
-		.onAppear
-		{
+        .onAppear
+        {
             assert(type(of: appRunnerViewModel) == AppRunnerViewModel.self)
             assert(type(of: detectorsViewModel) == DetectorsViewModel.self)
-		}
-		.onChange(of: userSettingViewModel.shouldOpenSettingsOnStart)
+        }
+        .onChange(of: userSettingViewModel.shouldOpenSettingsOnStart)
         { openSettingsOnStart in
             userSettingViewModel
-                .storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart: openSettingsOnStart)
+                .storeShouldOpenSettingsOnStart(
+                    shouldOpenSettingsOnStart: openSettingsOnStart
+                )
         }
     }
 }
@@ -61,10 +76,12 @@ struct UserSettingView_Previews: PreviewProvider
 {
     static var previews: some View
     {
-        let userSettingStorage = UserSettingStorage(defaults: MockUserDefaults())
+        let userSettingStorage =
+            UserSettingStorage(defaults: MockUserDefaults())
         let appRunnerViewModel = AppRunnerViewModel()
         let detectorsViewModel = DetectorsViewModel()
-        let userSettingViewModel = UserSettingViewModel(userSettingStorage: userSettingStorage)
+        let userSettingViewModel =
+            UserSettingViewModel(userSettingStorage: userSettingStorage)
         let mockAxis = MonitorAxis.x
 
         UserSettingView(

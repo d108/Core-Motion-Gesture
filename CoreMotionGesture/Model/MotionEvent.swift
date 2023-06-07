@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -27,18 +27,18 @@ enum MonitorAxis: CaseIterable, Codable, Identifiable
 
     func asText() -> String
     {
-        self.id
+        id
     }
 
     func asAxisText() -> String
     {
         let axis = "-Axis"
 
-        return self.asText() + axis
+        return asText() + axis
     }
 
     func imageName() -> String
     {
-        self.id.lowercased() + ".circle"
+        id.lowercased() + ".circle"
     }
 }
