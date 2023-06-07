@@ -145,7 +145,8 @@ struct DoubleShakeDetectionView: View
             }
 
             monitoringButton
-        }.if(Setting.shouldDebugLayout) { $0.border(.green) }
+        }
+        .if(Setting.shouldDebugLayout) { $0.border(.green) }
         .padding(.vertical)
         .onChange(of: motionEventViewModel.monitoringButtonState)
         { buttonState in
@@ -164,6 +165,7 @@ struct DoubleShakeDetectionView: View
         }
         .onAppear()
         {
+            assert(type(of: appRunnerViewModel) == AppRunnerViewModel.self)
             motionEventViewRunner.appRunnerShouldRun(
                 shouldRun: appRunnerViewModel.shouldRunDetectionView
             )

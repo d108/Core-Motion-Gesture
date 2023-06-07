@@ -43,7 +43,13 @@ struct UserSettingView: View
                 presentationMode.wrappedValue.dismiss()
             }
             Spacer().layoutPriority(1)
-        }.onChange(of: userSettingViewModel.shouldOpenSettingsOnStart)
+        }
+		.onAppear
+		{
+            assert(type(of: appRunnerViewModel) == AppRunnerViewModel.self)
+            assert(type(of: detectorsViewModel) == DetectorsViewModel.self)
+		}
+		.onChange(of: userSettingViewModel.shouldOpenSettingsOnStart)
         { openSettingsOnStart in
             userSettingViewModel
                 .storeShouldOpenSettingsOnStart(shouldOpenSettingsOnStart: openSettingsOnStart)
@@ -57,6 +63,7 @@ struct UserSettingView_Previews: PreviewProvider
     {
         let userSettingStorage = UserSettingStorage(defaults: MockUserDefaults())
         let appRunnerViewModel = AppRunnerViewModel()
+        let detectorsViewModel = DetectorsViewModel()
         let userSettingViewModel = UserSettingViewModel(userSettingStorage: userSettingStorage)
         let mockAxis = MonitorAxis.x
 
@@ -65,5 +72,6 @@ struct UserSettingView_Previews: PreviewProvider
             monitorAxis: mockAxis
         )
         .environmentObject(appRunnerViewModel)
+        .environmentObject(detectorsViewModel)
     }
 }

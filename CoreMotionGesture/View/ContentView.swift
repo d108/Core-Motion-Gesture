@@ -1,4 +1,4 @@
-/* 
+/*
  * SPDX-FileCopyrightText: © 2023 Daniel Zhang <https://github.com/d108/>
  * SPDX-License-Identifier: MIT License
  */
@@ -91,14 +91,20 @@ struct ContentView: View
             )
             .toolbar
             {
+				// We separate the toolbar items by grouping them into a
+                // ToolBarContent. However, The cost is having to pass in
+                // environment-based view models as parameters. This is because
+                // the ToolbarContent is not part of the view hierarchy.
+                // Instead, it is a configuration object that is used to create
+                // the toolbar items.
                 DetectorToolBar(
                     userSettingViewModel: userSettingViewModel,
                     tabSelectionViewModel: tabSelectionViewModel,
+                    appRunnerViewModel: appRunnerViewModel,
+                    detectorsViewModel: detectorsViewModel,
                     showingSettingsSheet: $showingSettingsSheet
                 )
             }
-            .environmentObject(appRunnerViewModel)
-            .environmentObject(detectorsViewModel)
         }
         .onChange(of: tabSelectionViewModel.selectedTab)
         { selectedTab in
@@ -110,6 +116,7 @@ struct ContentView: View
         }
         .onAppear
         {
+            assert(type(of: appRunnerViewModel) == AppRunnerViewModel.self)
             if userSettingViewModel.shouldOpenSettingsOnStart,
                     !userSettingViewModel.settingsShownOnStart
             {

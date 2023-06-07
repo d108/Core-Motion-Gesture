@@ -28,10 +28,10 @@ final class TabViewRunner: TimeChangerProtocol
     func runTimer()
     {
         subject
-            .sink(receiveValue:
+            .sink
             { tab in
                 self.runnableViewModel.onTimeChange(tab: tab)
-            })
+            }
             .store(in: &cancellables)
 
         var tabs = MonitorAxisTab.allCases

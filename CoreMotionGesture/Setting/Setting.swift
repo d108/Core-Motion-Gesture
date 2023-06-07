@@ -11,6 +11,11 @@ struct Setting
     static var defaultTab = MonitorAxis.x
     static var waveImageDelay: TimeInterval = 1.5
     static let vspace: CGFloat = 20
+
+    struct SystemImage
+    {
+        static let infoCircle = "info.circle"
+    }
 }
 
 extension Setting

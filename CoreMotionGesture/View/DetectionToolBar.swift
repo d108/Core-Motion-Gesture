@@ -7,11 +7,10 @@ import SwiftUI
 
 struct DetectorToolBar: ToolbarContent
 {
-    let infoCircle = "info.circle"
-    @EnvironmentObject var appRunnerViewModel: AppRunnerViewModel
-    @EnvironmentObject var detectorsViewModel: DetectorsViewModel
     @ObservedObject var userSettingViewModel: UserSettingViewModel
     @ObservedObject var tabSelectionViewModel: TabSelectionViewModel
+    @StateObject var appRunnerViewModel: AppRunnerViewModel
+    @StateObject var detectorsViewModel: DetectorsViewModel
     @Binding var showingSettingsSheet: Bool
     
     var body: some ToolbarContent
@@ -23,7 +22,7 @@ struct DetectorToolBar: ToolbarContent
                 showingSettingsSheet.toggle()
             } label:
             {
-                Image(systemName: infoCircle)
+                Image(systemName: Setting.SystemImage.infoCircle)
             }
             .sheet(
                 isPresented: $showingSettingsSheet,
