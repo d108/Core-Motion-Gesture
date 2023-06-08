@@ -74,6 +74,7 @@ or
 
 	$ ./bin/swift-files-to-eol-braces.sh
 
+## Discussion
 
 ### Errors will likely never not happen
 
